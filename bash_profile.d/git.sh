@@ -7,10 +7,11 @@ alias gi='git init && printf ".DS_Store\nThumbs.db\n" >> .gitignore && git add .
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative"
 alias glp='gl -p'
 
+alias gst='git status'
 alias gs='git status'
-alias gd='git diff'
-alias gds='git diff --cached'
-alias gdh='git diff HEAD'
+alias gd='git diff --color-words'
+alias gds='git diff --color-words --cached'
+alias gdh='git diff --color-words HEAD'
 
 alias ga='git add'
 alias gap='git add -p'
@@ -40,11 +41,12 @@ ggc() {
   echo "Cleaned up $((before-after)) kb."
 }
 
-grb() {
-  git push origin HEAD:refs/heads/$1
-  git fetch origin &&
-  git checkout -b $1 --track origin/$1
-}
+# Might use this, but we already have grb
+# grb() {
+#   git push origin HEAD:refs/heads/$1
+#   git fetch origin &&
+#   git checkout -b $1 --track origin/$1
+# }
 
 current_git_branch() {
   git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/\1/'

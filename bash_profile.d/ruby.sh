@@ -37,8 +37,23 @@ alias sg='script_rails generate'
 alias ss='script_rails server'
 alias sdbc='script_rails dbconsole -p'
 
+alias dm='rake db:migrate'
+alias dtp='rake db:test:prepare'
+alias dmtp='dm && dtp'
+
+alias ett='mate app config lib db public spec test vendor/plugins config.ru Rakefile Capfile Gemfile README'
+alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'
+
 alias r='rake'
 alias rs='rake spec'
-alias s='spec'
-alias c='cucumber'
+# alias s='spec'
+alias t='time testrb -Itest'
+# alias c='cucumber'
 alias cwip='cucumber --tags @wip'
+
+alias cdgems='cd `rvm gemdir`'
+
+alias rak='ack --ruby'
+alias wak='ack --web'
+alias rak-no-test='ack --ignore-dir=test --ruby'
+alias rgrep='grep -rnH'

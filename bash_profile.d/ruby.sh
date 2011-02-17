@@ -35,7 +35,7 @@ script_rails() {
 alias sc='script_rails console'
 alias sg='script_rails generate'
 alias ss='script_rails server'
-alias sdbc='script_rails dbconsole -p'
+alias sdc='script_rails dbconsole -p'
 
 alias dm='rake db:migrate'
 alias dtp='rake db:test:prepare'

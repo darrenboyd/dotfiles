@@ -5,6 +5,7 @@ done
 export VISUAL='mate -w'
 export EDITOR=$VISUAL
 export GIT_EDITOR='mate -wl1'
+export GEMEDITOR='mate'
 
 export PATH=~/bin:$PATH
 

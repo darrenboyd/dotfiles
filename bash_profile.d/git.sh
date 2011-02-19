@@ -9,15 +9,22 @@ alias glp='gl -p'
 alias gst='git status'
 alias gs='git status'
 alias gd='git diff --color-words'
+complete -o default -o nospace -F _git_diff gd
 alias gds='git diff --color-words --cached'
+complete -o default -o nospace -F _git_diff gds
 alias gdh='git diff --color-words HEAD'
+complete -o default -o nospace -F _git_diff gdh
 
 alias ga='git add'
+complete -o default -o nospace -F _git_add ga
 alias gap='git add -p'
 alias gc='git commit -v'
+complete -o default -o nospace -F _git_commit gc
 alias gca='gc -a'
+complete -o default -o nospace -F _git_add gca
 
 alias gco="git checkout"
+complete -o default -o nospace -F _git_checkout gco
 alias gcop="git checkout -p"
 
 alias gp='git pull --rebase || (notify "pull failed" "Git" && false)'

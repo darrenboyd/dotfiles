@@ -48,4 +48,7 @@ task :install do
       f.write(output)
     end
   end
+
+  puts "Use ~/.bash_profile.d/local.sh for machine specific bash settings."
+
 end

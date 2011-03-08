@@ -33,7 +33,11 @@ task :install do
 
     matcher = Regexp.new(Regexp.escape(lines.first) + '.*?' + Regexp.escape(lines.last), Regexp::MULTILINE)
 
-    contents = File.read("#{home}/.#{file}")
+    if File.exist?("#{home}/.#{file}")
+      contents = File.read("#{home}/.#{file}")
+    else
+      contents = ""
+    end
 
     puts "Insert content into #{home}/.#{file}"
     output = 

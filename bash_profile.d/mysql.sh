@@ -1,3 +1,4 @@
-alias mysqlstart="mysqld_safe &"
-alias mysqlstop="mysqladmin -u root -p shutdown"
-alias mysqlstatus="mysqladmin -u root -p ping"
+# These are homebrew commands, which make these aliases deprecated
+alias mysqlstart="mysql.server start"
+alias mysqlstop="mysql.server stop"
+alias mysqlstatus="mysql.server status"

@@ -1,6 +1,6 @@
 --type-set=tmstuff=.tmproj,.tm_build_errors
 --type-set=mail=.eml
---type-set=web=.js,.css,.sass,.rhtml,.erb,.rjs,.html,.haml
+--type-set=web=.js,.css,.scss,.sass,.rhtml,.erb,.rjs,.html,.haml
 --type-add=ruby=.haml,.rake,.rsel,.builder
 --type-add=html=.html.erb,.html.haml
 --type-add=js=.js.erb,.js

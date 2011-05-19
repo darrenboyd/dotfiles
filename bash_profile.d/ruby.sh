@@ -46,14 +46,14 @@ alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/tes
 
 alias r='rake'
 alias rs='rake spec'
-# alias s='spec'
+
+alias s='bundle exec spec'
 alias t='time testrb -Itest'
-# alias c='cucumber'
-alias cwip='cucumber --tags @wip'
+alias cuc='bundle exec cucumber -P --format progress --quiet'
 
 alias cdgems='cd `rvm gemdir`'
 
-alias rak='ack --ruby'
+alias rak='ack --ruby --cucumber'
 alias wak='ack --web'
 alias rak-no-test='ack --ignore-dir=test --ruby'
 alias rgrep='grep -rnH'

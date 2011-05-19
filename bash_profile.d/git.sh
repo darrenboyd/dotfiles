@@ -12,6 +12,9 @@ complete -o default -o nospace -F _git_diff gds
 alias gdh='git diff --color-words HEAD'
 complete -o default -o nospace -F _git_diff gdh
 
+alias gdm='git diff | mate'
+alias gdcm='git diff --cached | mate'
+
 alias ga='git add'
 complete -o default -o nospace -F _git_add ga
 alias gap='git add -p'

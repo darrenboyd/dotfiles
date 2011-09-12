@@ -7,6 +7,6 @@ export EDITOR=$VISUAL
 export GIT_EDITOR='mate -wl1'
 export GEMEDITOR='mate'
 
-export PATH=~/bin:$PATH
+export PATH=~/bin:/usr/local/bin:$PATH
 
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi

@@ -1,1 +1,0 @@
-setup_custom_irb_prompt(File.basename(DETECTED_RAILS_ROOT))

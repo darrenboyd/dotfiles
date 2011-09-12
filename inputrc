@@ -3,3 +3,9 @@
 "\e[B": history-search-forward
 "\e[C": forward-char
 "\e[D": backward-char
+
+set completion-ignore-case on
+set completion-prefix-display-length 2
+Control-j: menu-complete
+Control-k: menu-complete-backward
+

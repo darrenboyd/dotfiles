@@ -44,12 +44,13 @@ alias dmtp='dm && dtp'
 alias ett='mate app config lib db public spec test vendor/plugins config.ru Rakefile Capfile Gemfile README'
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'
 
-alias r='rake'
+alias b='bundle exec'
+alias br='bundle exec rake'
 alias rs='rake spec'
 
 alias s='bundle exec spec'
 alias t='time testrb -Itest'
-alias cuc='bundle exec cucumber -P --format progress --quiet'
+alias cuc='bundle exec cucumber -P --format pretty --quiet'
 
 alias cdgems='cd `rvm gemdir`'
 

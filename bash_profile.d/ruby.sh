@@ -48,7 +48,6 @@ alias b='bundle exec'
 alias br='bundle exec rake'
 alias rs='rake spec'
 
-alias s='bundle exec spec'
 alias t='time testrb -Itest'
 alias cuc='bundle exec cucumber -P --format pretty --quiet'
 

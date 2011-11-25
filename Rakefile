@@ -8,10 +8,10 @@ def stop_error(message)
   exit(1)
 end
 
-def symlink(target, link)
+def safe_symlink(target, link)
   puts "Linking #{link} => #{target}"
   if File.exist?(link) && Pathname.new(link).realpath.to_s != target
-    stop_error("File exists: #{link}")
+    stop_error("File exists: #{link} and doesn't point to #{target}")
   elsif !File.exist?(link)
     File.symlink(target, link)
     puts
@@ -24,7 +24,7 @@ task :install do
   pwd = File.dirname(__FILE__)
 
   LINK_FILES.each do |file|
-    symlink("#{pwd}/#{file}", "#{home}/.#{file}")
+    safe_symlink("#{pwd}/#{file}", "#{home}/.#{file}")
   end
   
   INSERT_FILES.each do |file|

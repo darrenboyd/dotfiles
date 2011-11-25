@@ -21,3 +21,4 @@ export LSCOLORS=gxgxcxdxbxegedabagacad
 
 alias e='$EDITOR'
 alias nano='nano -w'
+alias o='open'

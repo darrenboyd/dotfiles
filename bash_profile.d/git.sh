@@ -2,6 +2,8 @@
 # http://www.jukie.net/~bart/blog/pimping-out-git-log
 alias gl="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %cr)%Creset' --abbrev-commit --date=relative"
 alias glp='gl -p'
+alias glb='gl --branches'
+alias glm="gl master..."
 
 alias gst='git status'
 alias gs='git status'
@@ -14,6 +16,8 @@ complete -o default -o nospace -F _git_diff gdh
 
 alias gdm='git diff | mate'
 alias gdcm='git diff --cached | mate'
+
+alias gdm='gd master...'
 
 alias ga='git add'
 complete -o default -o nospace -F _git_add ga
@@ -33,8 +37,21 @@ alias gpru='gp && rake && gu'
 alias gri='git rebase -i origin/master^'
 alias grc='git rebase --continue'
 
-alias gb='git branch'
+alias gb='git branch -v'
 complete -o default -o nospace -F _git_branch gb
+alias gbu='git branch -v --no-merged'
+alias gbum='git branch -v --no-merged master'
+
+alias gbr='git branch -v -r'
+alias gbru='git branch -v -r --no-merged'
+alias gbrum='git branch -v -r --no-merged master'
+alias gba='git branch -v -a'
+alias gbau='git branch -v -a --no-merged'
+alias gbaum='git branch -v -a --no-merged master'
+
+alias gbdm='git branch --merged | grep -v "*" | xargs -n 1 git branch -d'
+
+alias grpo='git remote prune origin'
 
 alias gitx='gitx --all'
 
@@ -47,12 +64,15 @@ ggc() {
   echo "Cleaned up $((before-after)) kb."
 }
 
-# Might use this, but we already have grb
-# grb() {
-#   git push origin HEAD:refs/heads/$1
-#   git fetch origin &&
-#   git checkout -b $1 --track origin/$1
-# }
+grb() {
+  if [ -n "$1" ]; then
+    git push origin HEAD:refs/heads/$1
+    git fetch origin &&
+    git checkout -b $1 --track origin/$1
+  else
+    git branch --set-upstream `current_git_branch` origin/`current_git_branch`
+  fi
+}
 
 git_mode() {
   # https://github.com/hashrocket/dotmatrix/commit/d888bfee55ca430ba109e011d8b0958e810f799a

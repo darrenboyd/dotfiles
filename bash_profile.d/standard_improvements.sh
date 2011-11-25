@@ -12,7 +12,7 @@ touch() {
 }
 
 myip() {
-  curl --silent 'www.whatismyip.com/automation/n09230945.asp' && echo
+  curl --silent 'jsonip.com' && echo
 }
 
 

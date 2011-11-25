@@ -46,7 +46,6 @@ alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/tes
 
 alias b='bundle exec'
 alias br='bundle exec rake'
-alias rs='rake spec'
 
 alias t='time testrb -Itest'
 alias cuc='bundle exec cucumber -P --format pretty --quiet'

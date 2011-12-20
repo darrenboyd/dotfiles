@@ -7,12 +7,20 @@ alias glm="gl master..."
 
 alias gst='git status'
 alias gs='git status'
+
 alias gd='git diff --color-words'
 complete -o default -o nospace -F _git_diff gd
 alias gds='git diff --color-words --cached'
 complete -o default -o nospace -F _git_diff gds
 alias gdh='git diff --color-words HEAD'
 complete -o default -o nospace -F _git_diff gdh
+
+alias d='git diff'
+alias ds='git diff --cached'
+alias dh='git diff HEAD'
+complete -o default -o nospace -F _git_diff d
+complete -o default -o nospace -F _git_diff ds
+complete -o default -o nospace -F _git_diff dh
 
 alias gdm='git diff | mate'
 alias gdcm='git diff --cached | mate'

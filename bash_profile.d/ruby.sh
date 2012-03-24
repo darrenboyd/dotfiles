@@ -1,5 +1,7 @@
 # Inspiration from http://github.com/hashrocket/dotmatrix/blob/master/.hashrc
 
+export BUNDLER_EDITOR="mate"
+
 rails_root() {
   (
     dir=${1:-$(pwd)}

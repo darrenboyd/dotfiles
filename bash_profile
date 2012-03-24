@@ -3,9 +3,9 @@ for a in `ls $HOME/.bash_profile.d/*.sh`; do
   source $a
 done
 
-export VISUAL=`first_of "mate -w" vi`
+export VISUAL=`first_of "mate -w" "vim +1"`
 export EDITOR=$VISUAL
-export GIT_EDITOR=`first_of "mate -wl1" vi`
+export GIT_EDITOR=`first_of "mate -wl1" "vim +1"`
 export GEMEDITOR='mate'
 
 export PATH=~/bin:/usr/local/bin:$PATH

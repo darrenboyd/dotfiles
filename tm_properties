@@ -1,0 +1,49 @@
+
+# See http://wiki.macromates.com/Reference/Settings
+#
+# Put something like the following in
+# each project directory...
+# 
+# projectDirectory = "/Users/dboyd/Code/mediacast"
+# TM_FILE_PROJECT_PATH = '${TM_FILEPATH/^\/Users\/dboyd\/Code\/(.*)$/$1/g}'
+# windowTitle = '$TM_FILE_PROJECT_PATH'
+# 
+# exclude = "{$exclude,bin,coverage,db/sphinx}"
+
+
+include = "{$include,.gitignore}"
+exclude = "{doc,tmp,log,*.tmproj,vendor/cache}"
+
+showInvisibles   = true
+
+# Configure git and hg
+#
+TM_HG  = "/opt/local/bin/hg"
+TM_GIT = "/opt/local/bin/git"
+
+RAILS_VIEW_EXT = 'haml'
+RAILS_CSS_EXT  = 'scss'
+
+# Default editing configuration
+#
+softWrap         = false
+# workaround
+wrapColumn = 1000 
+softTabs         = true
+tabSize          = 2
+
+# File type specific configuration
+#
+[ .git/COMMIT_EDITMSG ]
+spellChecking    = true
+spellingLanguage = 'en'
+
+[ *.{icns,ico,jpg,jpeg,m4v,nib,pdf,png,psd,pyc,rtf,tif,tiff,xib,flv,mov,mpg,mp4,3gp,wmv,avi,swf} ]
+binary           = true
+
+[ source ]
+softTabs         = true
+tabSize          = 2
+
+[ "{README,INSTALL,LICENSE,TODO}" ]
+fileType         = "text.plain"

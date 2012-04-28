@@ -8,7 +8,7 @@ export EDITOR=$VISUAL
 export GIT_EDITOR=`first_of "mate -wl1" "vim +1"`
 export GEMEDITOR='mate'
 
-export PATH=~/bin:/usr/local/bin:$PATH
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 ulimit -n 10240
 

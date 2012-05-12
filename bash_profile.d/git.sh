@@ -25,8 +25,6 @@ complete -o default -o nospace -F _git_diff dh
 alias gdm='git diff | mate'
 alias gdcm='git diff --cached | mate'
 
-alias gdm='gd master...'
-
 alias ga='git add'
 complete -o default -o nospace -F _git_add ga
 alias gap='git add -p'

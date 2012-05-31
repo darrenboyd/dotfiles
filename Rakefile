@@ -2,7 +2,7 @@ require 'pathname'
 
 LINK_FILES = %w(tm_properties irbrc irbrc.d railsrc railsrc.d aprc bash_profile bash_profile.d
                 editrc inputrc ackrc gitignore rvmrc
-                vimrc.before vimrc.after gvimrc.before gvimrc.after)
+                janus vimrc.before vimrc.after gvimrc.before gvimrc.after)
 INSERT_FILES = %w(gemrc gitconfig)
 
 def stop_error(message)

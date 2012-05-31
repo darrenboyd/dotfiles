@@ -8,3 +8,5 @@ let g:buffergator_split_size = 15
 
 call janus#add_mapping('nerdtree', 'map', '<leader>N', ':NERDTreeFind<CR>')
 
+command ConvertHash %s/:\([^ ]*\)\(\s*\)=>/\1:/g
+

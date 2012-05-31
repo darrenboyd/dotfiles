@@ -1,6 +1,6 @@
 # Inspiration from http://github.com/hashrocket/dotmatrix/blob/master/.hashrc
 
-export BUNDLER_EDITOR="mate"
+export BUNDLER_EDITOR="mvim"
 
 rails_root() {
   (

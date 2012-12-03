@@ -1,6 +1,91 @@
 # START GENERATED
-[core]
-  excludesfile = ~/.gitignore
 [color]
   ui = true
+
+[core]
+  excludesfile = ~/.gitignore
+  editor = mvim -f
+  quotepath = false
+
+[branch]
+  autosetupmerge = true
+
+[push]
+	default = upstream
+
+[diff]
+  tool = gvimdiff
+
+[merge]
+	ff = false
+
+[alias]
+  co = checkout
+  st = status
+  br = branch
+  ba = branch -a
+  bra = branch -ra
+  up = pull --rebase
+  share = push --set-upstream
+  web = instaweb
+  release  = log --pretty=format:'%s [%an -- %cr]' --no-merges --abbrev-commit --date=relative production..master
+  lg  = log --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+
+  st = status -s
+
+  cl = clone
+
+  ci = commit
+  cm = commit -m
+  cma = commit -a -m
+  ca = commit --amend
+  amend = commit --amend
+  caa = commit -a --amend -C HEAD
+  filelog = log -u
+  fl = log -u
+
+  ai = add --interactive
+
+  #"!git branch -ra | grep -v done"
+  #list commands
+  le = log --oneline --decorate
+  ll = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate --numstat
+  ls = log --pretty=format:'%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn]' --decorate
+  lds = log --pretty=format:'%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]' --decorate --date=short
+  ld = log --pretty=format:'%C(yellow)%h %ad%Cred%d %Creset%s%Cblue [%cn]' --decorate --date=relative
+  lc  = "!f() { git ll "$1"^.."$1"; }; f"
+  lnc = log --pretty=format:'%h %s [%cn]'
+
+  #list all aliases
+  #
+  la = "!git config -l | grep alias | cut -c 7-"
+
+  diff = diff --word-diff
+  d = diff --word-diff
+  dc = diff --cached
+  #list modified files in last commit
+  dl = "!git ll -1"
+  #diff last commit
+  dr  = "!f() { git diff "$1"^.."$1"; }; f"
+  dlc = diff --cached HEAD^
+  diffr  = "!f() { git diff "$1"^.."$1"; }; f"
+  branch = branch -ra
+
+  #reset commands
+  r1 = reset HEAD^
+  r2 = reset HEAD^^
+  rh = reset --hard
+  rh1 = reset HEAD^ --hard
+  rh2 = reset HEAD^^ --hard
+
+  cp = cherry-pick
+
+  lasttag = describe --tags --abbrev=0
+  lt = describe --tags --abbrev=0
+
+  #merges
+  ours = "!f() { git co --ours $@ && git add $@; }; f"
+  theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+
 # END GENERATED

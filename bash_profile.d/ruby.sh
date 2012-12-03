@@ -38,6 +38,7 @@ alias sc='script_rails console'
 alias sg='script_rails generate'
 alias sd='script_rails destroy'
 alias ss='script_rails server'
+alias sp='script_rails server Puma'
 alias sdc='script_rails dbconsole -p'
 
 alias dm='rake db:migrate'

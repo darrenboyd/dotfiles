@@ -5,6 +5,8 @@ alias glp='gl -p'
 alias glb='gl --branches'
 alias glm="gl master..."
 
+alias gbump='git commit -am"Bumping version"'
+
 alias gst='git status'
 alias gs='git status'
 

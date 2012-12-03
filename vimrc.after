@@ -11,3 +11,20 @@ call add(NERDTreeIgnore, '.zeus.sock')
 
 command ConvertHash %s/:\([^ ]*\)\(\s*\)=>/\1:/g
 
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a= :Tabularize /=><CR>
+  vmap <Leader>a= :Tabularize /=><CR>
+  nmap <Leader>a: :Tabularize /:<CR>
+  vmap <Leader>a: :Tabularize /:<CR>
+  nmap <Leader>a:: :Tabularize /:\zs<CR>
+  vmap <Leader>a:: :Tabularize /:\zs<CR>
+  nmap <Leader>a, :Tabularize /,<CR>
+  vmap <Leader>a, :Tabularize /,<CR>
+  nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+  vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+
+  vmap <Leader>ah :Tabularize/\w:\zs/l0l1<CR>
+  vmap <Leader>ahh :Tabularize/\w:\zs/r0l1l0<CR>
+endif

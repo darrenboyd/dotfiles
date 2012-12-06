@@ -14,8 +14,8 @@ command ConvertHash %s/:\([^ ]*\)\(\s*\)=>/\1:/g
 if exists(":Tabularize")
   nmap <Leader>a= :Tabularize /=<CR>
   vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a= :Tabularize /=><CR>
-  vmap <Leader>a= :Tabularize /=><CR>
+  nmap <Leader>a> :Tabularize /=><CR>
+  vmap <Leader>a> :Tabularize /=><CR>
   nmap <Leader>a: :Tabularize /:<CR>
   vmap <Leader>a: :Tabularize /:<CR>
   nmap <Leader>a:: :Tabularize /:\zs<CR>

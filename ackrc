@@ -23,3 +23,5 @@
 --color
 --follow
 --group
+
+--pager=less -FRX

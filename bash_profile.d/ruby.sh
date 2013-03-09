@@ -24,6 +24,8 @@ script_rails() {
   rails_root=`rails_root`
   if [ -f "$rails_root/script/rails" ]; then
     "$rails_root/script/rails" "$@"
+  elif [ -f "$rails_root/bin/rails" ]; then
+    "$rails_root/bin/rails" "$@"
   elif [ -f "$rails_root/script/$1" ]; then
     local name
     name="$1"
@@ -34,12 +36,11 @@ script_rails() {
   fi
 }
 
-alias sc='script_rails console'
-alias sg='script_rails generate'
-alias sd='script_rails destroy'
-alias ss='script_rails server'
-alias sp='script_rails server Puma'
-alias sdc='script_rails dbconsole -p'
+alias rc='script_rails console'
+alias rg='script_rails generate'
+alias rd='script_rails destroy'
+alias rs='script_rails server'
+alias rdb='script_rails dbconsole -p'
 
 alias dm='rake db:migrate'
 alias dtp='rake db:test:prepare'

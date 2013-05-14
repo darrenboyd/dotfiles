@@ -1,3 +1,5 @@
 let mapleader = ","
 
 let g:snips_trigger_key='<c-space>'
+
+set wildignore+=*/public/assets/*

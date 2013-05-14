@@ -18,6 +18,7 @@
 --ignore-dir=doc
 --ignore-dir=coverage
 --ignore-dir=scratch
+--ignore-dir=public/assets
 
 --sort-files
 --color

@@ -23,4 +23,4 @@ alias e='$EDITOR'
 alias nano='nano -w'
 alias o='open'
 
-
+alias ed='mvim'

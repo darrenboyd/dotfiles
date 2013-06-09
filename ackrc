@@ -16,6 +16,7 @@
 --ignore-dir=bin
 --ignore-dir=tmp
 --ignore-dir=doc
+--ignore-dir=.yardoc
 --ignore-dir=coverage
 --ignore-dir=scratch
 --ignore-dir=public/assets

@@ -6,6 +6,8 @@ let g:CommandTMatchWindowAtTop=1
 let g:buffergator_viewport_split_policy = 'T'
 let g:buffergator_split_size = 15
 
+let g:ackprg = 'ag --nogroup --nocolor --column'
+
 call janus#add_mapping('nerdtree', 'map', '<leader>N', ':NERDTreeFind<CR>')
 call add(NERDTreeIgnore, '.zeus.sock')
 

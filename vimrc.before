@@ -1,5 +1,7 @@
 let mapleader = ","
 
-let g:snips_trigger_key='<c-space>'
+" see :h snipMate-mappings
+imap <c-space> <Plug>snipMateNextOrTrigger
+smap <c-space> <Plug>snipMateNextOrTrigger
 
 set wildignore+=*/public/assets/*

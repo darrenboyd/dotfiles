@@ -31,6 +31,7 @@ alias gdm='git diff | mate'
 alias gdcm='git diff --cached | mate'
 
 alias ga='git add'
+alias gaa='git add -A'
 complete -o default -o nospace -F _git_add ga
 alias gap='git add -p'
 alias gc='git commit -v'

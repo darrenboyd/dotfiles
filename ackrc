@@ -6,7 +6,9 @@
 --type-add=js=.js.erb,.js
 --type-add=css=.sass,.scss,.less,.css
 --type-set=cucumber=.feature
+--type-set=CTAGS=.tags,.tags_sorted_by_file,.tmtags,.tmtagsHistory
 
+--noCTAGS
 --nomail
 --notmstuff
 

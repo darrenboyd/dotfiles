@@ -42,6 +42,14 @@ alias rd='script_rails destroy'
 alias rs='script_rails server'
 alias rdb='script_rails dbconsole -p'
 
+function fs() {
+  if [ -f Procfile.dev ]; then
+    foreman start -f Procfile.dev $*
+  else
+    foreman start $*
+  fi
+}
+
 alias dm='rake db:migrate'
 alias dtp='rake db:test:prepare'
 alias dmtp='dm && dtp'

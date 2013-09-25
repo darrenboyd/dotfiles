@@ -6,15 +6,20 @@
 # 
 # projectDirectory = "/Users/dboyd/Code/mediacast"
 # TM_FILE_PROJECT_PATH = '${TM_FILEPATH/^\/Users\/dboyd\/Code\/(.*)$/$1/g}'
-# windowTitle = '$TM_FILE_PROJECT_PATH'
+windowTitle = '${TM_FILEPATH:?${TM_FILEPATH/${CWD}.//}:$TM_DISPLAYNAME}$windowTitleProject$windowTitleSCM'
+
 # 
 # exclude = "{$exclude,bin,coverage,db/sphinx}"
-
 
 include = "{$include,.gitignore}"
 exclude = "{doc,tmp,log,*.tmproj,vendor/cache}"
 
 showInvisibles   = true
+
+TM_RUBY = "/Users/darren/.rvm/bin/rvm-auto-ruby"
+
+TmCtagsTagFileName = '.tmtags'
+TmCtagsHistoryFileName = '.tmtagsHistory'
 
 # Configure git and hg
 #
@@ -31,6 +36,8 @@ softWrap         = false
 wrapColumn = 1000 
 softTabs         = true
 tabSize          = 2
+
+disableIndentCorrections = true;
 
 # File type specific configuration
 #

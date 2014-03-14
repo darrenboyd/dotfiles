@@ -34,6 +34,7 @@ alias ga='git add'
 alias gaa='git add -A'
 complete -o default -o nospace -F _git_add ga
 alias gap='git add -p'
+complete -o default -o nospace -F _git_add gap
 alias gc='git commit -v'
 complete -o default -o nospace -F _git_commit gc
 alias gca='gc -a'

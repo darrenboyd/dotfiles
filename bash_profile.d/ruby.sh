@@ -71,5 +71,8 @@ alias rak-no-test='ack --ignore-dir=test --ruby'
 alias rgrep='grep -rnH'
 
 # decent MRI GC settings for faster local development/test
-export RUBY_GC_MALLOC_LIMIT=90000000
-export RUBY_FREE_MIN=200000
+export RUBY_GC_MALLOC_LIMIT_MAX=90000000
+export RUBY_GC_HEAP_FREE_SLOTS=200000
+# For pre 2.1 rubies
+#export RUBY_GC_MALLOC_LIMIT=90000000
+#export RUBY_FREE_MIN=200000

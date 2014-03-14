@@ -113,7 +113,7 @@ current_git_branch() {
 }
 
 git_commits_ahead() {
-  git status 2> /dev/null | grep ahead | sed -e 's/.*by \([0-9]\{1,\}\) commits\{0,1\}\./\1/'
+  git status 2> /dev/null | grep 'is ahead of' | sed -e 's/.*by \([0-9]\{1,\}\) commits\{0,1\}\./\1/'
 }
 
 # Roughly from git_completion

@@ -13,3 +13,5 @@ export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 ulimit -n 10240
 
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+
+eval "$(direnv hook bash)"

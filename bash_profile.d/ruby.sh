@@ -17,8 +17,7 @@ function fs() {
 }
 
 alias dm='rake db:migrate'
-alias dtp='rake db:test:prepare'
-alias dmtp='dm && dtp'
+alias dmt='RAILS_ENV=test rake db:drop db:create db:structure:load'
 
 alias ett='mate app config lib db public spec test vendor/plugins config.ru Rakefile Capfile Gemfile README'
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'

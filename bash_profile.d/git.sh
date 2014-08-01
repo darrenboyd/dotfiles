@@ -43,11 +43,9 @@ complete -o default -o nospace -F _git_add gca
 alias gco="git checkout"
 complete -o default -o nospace -F _git_checkout gco
 alias gcop="git checkout -p"
+alias gcm="git checkout master"
 
-alias gp='git pull --rebase || (notify "pull failed" "Git" && false)'
-alias gu='git push origin HEAD || (notify "push failed" "Git" && false)'
-alias gpru='gp && rake && gu'
-alias gri='git rebase -i origin/master^'
+alias gpo='git push --set-upstream origin `current_git_branch`'
 alias grc='git rebase --continue'
 
 alias gb='git branch -v'

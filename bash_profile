@@ -16,4 +16,6 @@ fi
 
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
-eval "$(direnv hook bash)"
+if [[ `which direnv` ]]; then
+  eval "$(direnv hook bash)"
+fi

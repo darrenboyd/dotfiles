@@ -10,7 +10,9 @@ export GEMEDITOR='mvim'
 
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
-ulimit -n 10240
+if [[ $(uname -s) == 'Darwin' ]]; then
+  ulimit -n 10240
+fi
 
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 

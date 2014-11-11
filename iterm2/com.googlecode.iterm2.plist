@@ -41,7 +41,7 @@
 	<key>EnableRendezvous</key>
 	<false/>
 	<key>FocusFollowsMouse</key>
-	<true/>
+	<false/>
 	<key>FsTabDelay</key>
 	<real>1</real>
 	<key>HiddenAFRStrokeThickness</key>
@@ -119,9 +119,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>587 148 693 495 0 0 1280 777 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>76 193 924 485 0 0 1280 777 </string>
+	<string>173 144 924 485 0 0 1280 777 </string>
+	<key>NSWindow Frame UKCrashReporter</key>
+	<string>80 193 592 584 0 0 1280 777 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>4 40 1260 730 0 0 1280 777 </string>
+	<string>4 34 1000 743 0 0 1280 777 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>4 23 1260 752 0 0 1280 777 </string>
+	<key>NSWindow Frame iTerm Window 2</key>
+	<string>447 174 810 576 0 0 1280 777 </string>
 	<key>NeverWarnAboutShortLivedSessions_10BF8722-DDA3-4698-8433-0AD6EC91E898</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -916,7 +922,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2014-11-04T18:40:37Z</date>
+	<date>2014-11-10T21:50:22Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>ShowBookmarkName</key>
@@ -939,6 +945,8 @@
 	<integer>10</integer>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
+	<key>UKCrashReporterLastCrashReportDate</key>
+	<real>1415661440</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>

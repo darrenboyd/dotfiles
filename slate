@@ -13,6 +13,8 @@ alias left-50-1st-mon  move screenOriginX;screenOriginY screenSizeX*0.5;screenSi
 alias right-60-1st-mon move screenOriginX+screenSizeX*0.4;screenOriginY screenSizeX*0.6;screenSizeY 0
 alias right-70-1st-mon move screenOriginX+screenSizeX*0.3;screenOriginY screenSizeX*0.7;screenSizeY 0
 
+alias max-1st-mon move screenOriginX;screenOriginY screenSizeX;screenSizeY 0
+
 alias hipchat-2nd-mon    move screenOriginX+screenSizeX-1175;screenOriginY+0 1175;screenSizeY 1
 
 bind 3:j,ctrl,alt,cmd ${left-30-1st-mon}
@@ -25,7 +27,12 @@ layout battleStation 'iTerm':IGNORE_FAIL ${left-50-1st-mon}
 layout battleStation 'MacVim':IGNORE_FAIL ${right-60-1st-mon}
 layout battleStation 'HipChat':IGNORE_FAIL ${hipchat-2nd-mon}
 
+layout laptop 'iTerm':IGNORE_FAIL ${max-1st-mon}
+layout laptop 'MacVim':IGNORE_FAIL ${max-1st-mon}
+layout laptop 'HipChat':IGNORE_FAIL ${max-1st-mon}
+
 bind 1:ctrl;alt;cmd layout battleStation
+bind 0:ctrl;alt;cmd layout laptop
 
 default battleStation resolutions:2560x1440;1440x900
 

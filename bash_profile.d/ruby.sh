@@ -8,6 +8,8 @@ alias rd='bin/rails destroy'
 alias rs='bin/rails server'
 alias rdb='bin/rails dbconsole -p'
 
+alias ss='spring stop'
+
 function fs() {
   if [ -f Procfile.dev ]; then
     foreman start -f Procfile.dev $*
@@ -17,7 +19,9 @@ function fs() {
 }
 
 alias dm='rake db:migrate'
-alias dmt='RAILS_ENV=test rake db:drop db:create db:structure:load'
+alias dmt='RAILS_ENV=test rake db:reset'
+alias dmu='rake db:rollback'
+alias dmr='rake db:migrate:redo'
 
 alias ett='mate app config lib db public spec test vendor/plugins config.ru Rakefile Capfile Gemfile README'
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'

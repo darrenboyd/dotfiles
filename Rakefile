@@ -1,7 +1,7 @@
 require 'pathname'
 
 LINK_FILES = %w(tm_properties irbrc irbrc.d railsrc railsrc.d aprc bash_profile bash_profile.d
-                editrc inputrc ackrc gitignore rvmrc slate)
+                editrc inputrc ackrc gitignore rvmrc slate psqlrc)
 INSERT_FILES = %w(gemrc gitconfig)
 
 def stop_error(message)
@@ -27,7 +27,7 @@ task :install do
   LINK_FILES.each do |file|
     safe_symlink("#{pwd}/#{file}", "#{home}/.#{file}")
   end
-  
+
   INSERT_FILES.each do |file|
     insert = File.read("#{pwd}/#{file}").strip
     lines = insert.split("\n")
@@ -37,20 +37,23 @@ task :install do
     contents = File.exists?("#{home}/.#{file}") ? File.read("#{home}/.#{file}") : ''
 
     puts "Insert content into #{home}/.#{file}"
-    output = 
+    output =
       if contents =~ matcher
         contents.sub(matcher, insert)
       else
         puts "WARNING: This is the first time editing #{home}/.#{file} automatically, you should verify the contents."
         insert + "\n" + contents
       end
-    
+
     File.open("#{home}/.#{file}", 'w') do |f|
       f.write(output)
     end
   end
 
+  FileUtils.touch("#{home}/.psqlrc.local")
+
   puts "Use ~/.bash_profile.d/local.sh for machine specific bash settings."
+  puts "Use ~/.psqlrc.local for machine specific psql settings."
 
 end
 

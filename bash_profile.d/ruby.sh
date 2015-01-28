@@ -19,7 +19,7 @@ function fs() {
 }
 
 alias dm='rake db:migrate'
-alias dmt='RAILS_ENV=test rake db:reset'
+alias dmt='RAILS_ENV=test rake db:drop db:create db:schema:load'
 alias dmu='rake db:rollback'
 alias dmr='rake db:migrate:redo'
 

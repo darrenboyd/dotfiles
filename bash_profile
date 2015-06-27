@@ -1,4 +1,6 @@
 
+[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
+
 for a in `ls $HOME/.bash_profile.d/*.sh`; do 
   source $a
 done

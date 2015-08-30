@@ -10,7 +10,14 @@ export EDITOR=$VISUAL
 export GIT_EDITOR="vim +1"
 export GEMEDITOR='mvim'
 
+if [[ -d ~/.rvm/bin ]] ; then
+  PATH=~/.rvm/bin:$PATH
+fi
+if [[ -d ~/.local/bin ]] ; then
+  PATH=~/.local/bin:$PATH
+fi
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:~/.rvm/bin:$PATH
+
 
 if [[ $(uname -s) == 'Darwin' ]]; then
   ulimit -n 10240

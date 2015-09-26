@@ -8,7 +8,6 @@ done
 export VISUAL="vim +1"
 export EDITOR=$VISUAL
 export GIT_EDITOR="vim +1"
-export GEMEDITOR='mvim'
 
 if [[ -d ~/.rvm/bin ]] ; then
   PATH=~/.rvm/bin:$PATH

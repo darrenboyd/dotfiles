@@ -1,7 +1,5 @@
 # Inspiration from http://github.com/hashrocket/dotmatrix/blob/master/.hashrc
 
-export BUNDLER_EDITOR="mvim"
-
 alias rc='bin/rails console'
 alias rg='bin/rails generate'
 alias rd='bin/rails destroy'

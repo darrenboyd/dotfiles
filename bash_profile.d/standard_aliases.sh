@@ -19,8 +19,16 @@ alias lc='wc -l'
 export CLICOLOR=1
 export LSCOLORS=gxgxcxdxbxegedabagacad
 
-alias e='$EDITOR'
-alias nano='nano -w'
-alias o='open'
+if [ -e /usr/bin/gvim ]; then
+  alias ed='gvim'
+else
+  alias ed='mvim'
+fi
 
-alias ed='mvim'
+if [ -e /usr/bin/gnome-open ]; then
+  function o() {
+    gnome-open $* >& /dev/null
+  }
+else
+  alias o='open'
+fi

@@ -28,6 +28,8 @@ fi
 
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
+if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then . /home/darren/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
 if [[ `which direnv` ]]; then
   eval "$(direnv hook bash)"
 fi

@@ -19,3 +19,7 @@ Even when Finder is running, don't display files on 'Desktop'.
 After both or either of those...
 
     $ killall Finder
+
+Install Slate:
+
+* https://github.com/mattr-/slate

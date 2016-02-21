@@ -1,0 +1,45 @@
+sudo apt-get install ubuntu-gnome-desktop
+
+Fix caps-lock # gnome-tweak-tool, not sure how to do it through a script
+
+# packages
+vim-gnome git terminator
+postgresql-9.4 libpq5 postgresql-server-dev-9.4
+redis-server
+direnv
+
+# Installing chrome
+
+wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+sudo apt-get update
+sudo apt-get install google-chrome
+
+# RVM
+gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+\curl -sSL https://get.rvm.io | bash -s stable
+source /home/darren/.rvm/scripts/rvm
+
+# dotfiles
+# clone dotfiles
+rake
+
+sudo update-alternatives --config x-terminal-emulator
+
+# inSync
+# https://www.insynchq.com/downloads
+wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key | sudo apt-key add -
+sudo sh -c 'echo "deb http://apt.insynchq.com/ubuntu wily non-free contrib" >> /etc/apt/sources.list.d/insynchq.list'
+
+
+# Dropbox
+https://www.dropbox.com/install
+
+# Heroku
+wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+
+# PG
+# The pg_hba.conf file needs...
+# host    all             all             127.0.0.1/32            trust
+# host    all             all             ::1/128                 trust

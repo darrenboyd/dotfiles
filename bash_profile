@@ -1,6 +1,4 @@
 
-[[ -s "$HOME/.profile" ]] && source "$HOME/.profile" # Load the default .profile
-
 for a in `ls $HOME/.bash_profile.d/*.sh`; do 
   source $a
 done
@@ -15,7 +13,7 @@ fi
 if [[ -d ~/.local/bin ]] ; then
   PATH=~/.local/bin:$PATH
 fi
-export PATH=~/bin:/usr/local/bin:/usr/local/sbin:~/.rvm/bin:$PATH
+export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
 
 if [[ $(uname -s) == 'Darwin' ]]; then
@@ -27,6 +25,10 @@ if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
 fi
 
 if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
+
+if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
+  source /usr/local/share/chruby/chruby.sh;
+fi
 
 if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then . /home/darren/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
 

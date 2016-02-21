@@ -9,11 +9,28 @@ def stop_error(message)
   exit(1)
 end
 
+BACKUP_DIR=File.join(ENV['HOME'], 'dotfiles-bak')
+
+def move_target(target)
+  if @our_backup_dir.nil? && File.exist?(BACKUP_DIR)
+    stop_error("Backup directory exists: #{BACKUP_DIR}")
+  end
+  if @our_backup_dir.nil?
+    puts "Creating backup directory #{BACKUP_DIR}"
+    FileUtils.mkdir(BACKUP_DIR)
+    @our_backup_dir = true
+  end
+  puts "Moving #{target} to #{BACKUP_DIR}"
+  FileUtils.mv(target, "#{BACKUP_DIR}/")
+end
+
 def safe_symlink(target, link)
   puts "Linking #{link} => #{target}"
   if File.exist?(link) && Pathname.new(link).realpath.to_s != target
-    stop_error("File exists: #{link} and doesn't point to #{target}")
-  elsif !File.exist?(link)
+    puts "Moving #{link} to backup directory"
+    move_target(link)
+  end
+  if !File.exist?(link)
     File.symlink(target, link)
     puts
   end

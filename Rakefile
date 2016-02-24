@@ -1,6 +1,7 @@
 require 'pathname'
 
-LINK_FILES = %w(tm_properties irbrc irbrc.d railsrc railsrc.d aprc bash_profile bash_profile.d
+LINK_FILES = %w(tm_properties irbrc irbrc.d railsrc railsrc.d aprc
+                bash_profile bash_profile.d bashrc
                 editrc inputrc ackrc gitignore rvmrc slate psqlrc)
 INSERT_FILES = %w(gemrc gitconfig)
 

@@ -5,7 +5,7 @@ alias psg='ps aux | grep'
 
 touch() {
   dir=`expr "$1" : '\(.*\/\)'`
-  if [ $dir ] 
+  if [ $dir ]
     then
     mkdir -p $dir
   fi
@@ -15,7 +15,6 @@ touch() {
 myip() {
   curl --silent 'jsonip.com' && echo
 }
-
 
 _ssh_hosts() {
   grep "Host " ~/.ssh/config 2> /dev/null | sed -e "s/Host //g"

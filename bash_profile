@@ -1,5 +1,8 @@
+# ~/.bash_profile: executed by bash(1) for login shells.
 
-for a in `ls $HOME/.bash_profile.d/*.sh`; do 
+[[ -s "$HOME/.bashrc" ]] && source "$HOME/.bashrc"
+
+for a in `ls $HOME/.bash_profile.d/*.sh`; do
   source $a
 done
 
@@ -28,6 +31,7 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
 if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
   source /usr/local/share/chruby/chruby.sh;
+  chruby 2.3.0
 fi
 
 if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then . /home/darren/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
@@ -35,3 +39,6 @@ if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then . /home/darren/.n
 if [[ `which direnv` ]]; then
   eval "$(direnv hook bash)"
 fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

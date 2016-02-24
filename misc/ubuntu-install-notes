@@ -6,7 +6,7 @@ Fix caps-lock # gnome-tweak-tool, not sure how to do it through a script
 vim-gnome git terminator
 postgresql-9.4 libpq5 postgresql-server-dev-9.4
 redis-server
-direnv
+direnv silversearcher-ag graphicsmagick-imagemagick-compat
 
 # Installing chrome
 

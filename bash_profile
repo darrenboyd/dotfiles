@@ -31,7 +31,7 @@ if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
 
 if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
   source /usr/local/share/chruby/chruby.sh;
-  chruby 2.3.0
+  chruby 2.3.1
 fi
 
 if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then . /home/darren/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

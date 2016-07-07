@@ -17,3 +17,8 @@ sudo cp etc/insync.list /etc/apt/sources.list.d/
 sudo apt update
 sudo apt install insync
 
+
+# GoldenDict stuff
+# http://goldendict.org/download.php
+
+

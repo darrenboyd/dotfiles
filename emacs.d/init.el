@@ -10,7 +10,3 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(use-package company
-  :ensure t
-  :defer t
-  :idle (global-company-mode))

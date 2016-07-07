@@ -34,7 +34,10 @@ if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
   chruby 2.3.1
 fi
 
-if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then . /home/darren/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then
+  source /home/darren/.nix-profile/etc/profile.d/nix.sh
+  export MANPATH=/home/darren/.nix-profile/share/man:$MANPATH
+fi # added by Nix installer
 
 if [[ `which direnv` ]]; then
   eval "$(direnv hook bash)"

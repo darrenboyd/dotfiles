@@ -16,10 +16,10 @@ function fs() {
   fi
 }
 
-alias dm='rake db:migrate'
-alias dmt='RAILS_ENV=test rake db:drop db:create db:structure:load'
-alias dmu='rake db:rollback'
-alias dmr='rake db:migrate:redo'
+alias dm='rails db:migrate'
+alias dmt='RAILS_ENV=test rails db:drop db:create db:structure:load'
+alias dmu='rails db:rollback'
+alias dmr='rails db:migrate:redo'
 
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'
 

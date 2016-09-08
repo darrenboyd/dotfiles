@@ -35,6 +35,7 @@ values."
      markdown
      javascript
      html
+     yaml
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30

@@ -13,6 +13,9 @@ export GIT_EDITOR="vim +1"
 if [[ -d ~/.rvm/bin ]] ; then
   PATH=~/.rvm/bin:$PATH
 fi
+if [[ -d ~/.npm-packages/bin ]]; then
+  export PATH=~/.npm-packages/bin:$PATH
+fi
 if [[ -d ~/.local/bin ]] ; then
   PATH=~/.local/bin:$PATH
 fi

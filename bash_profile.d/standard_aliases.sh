@@ -19,11 +19,9 @@ alias lc='wc -l'
 export CLICOLOR=1
 export LSCOLORS=gxgxcxdxbxegedabagacad
 
-if [ -e /usr/bin/gvim ]; then
-  alias ed='gvim'
-else
-  alias ed='mvim'
-fi
+ed() { emacsclient -qc "$@" & }
+
+et() { emacsclient -t "$@"; }
 
 if [ -e /usr/bin/gnome-open ]; then
   function o() {

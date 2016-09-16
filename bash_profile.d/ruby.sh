@@ -17,9 +17,11 @@ function fs() {
 }
 
 alias dm='rails db:migrate'
-alias dmt='RAILS_ENV=test rails db:drop db:create db:structure:load'
+alias dmt='rails db:test:prepare'
 alias dmu='rails db:rollback'
 alias dmr='rails db:migrate:redo'
+
+alias gua='bundle exec guard'
 
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'
 

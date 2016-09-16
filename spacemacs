@@ -263,6 +263,8 @@ you should place your code here."
   ;; For Javascript
   (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (setq ruby-insert-encoding-magic-comment nil)
+  (setq-default js2-basic-offset 2
+                js-indent-level 2)
   (which-function-mode)
   )
 

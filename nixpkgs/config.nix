@@ -3,9 +3,16 @@
     all = with pkgs; buildEnv {
       name = "all";
       paths = [
-        file
         git
+        direnv
+        elixir
+        erlang
+        file
         graphviz
+        nix
+        nodejs
+        silver-searcher
+        watchman
       ];
     };
   };

@@ -1,10 +1,5 @@
 # Inspiration from http://github.com/hashrocket/dotmatrix/blob/master/.hashrc
 
-export GEM_PATH=~/.gems
-export GEM_HOME=~/.gems
-
-export PATH=$GEM_HOME/bin:$PATH
-
 alias rc='bin/rails console'
 alias rg='bin/rails generate'
 alias rd='bin/rails destroy'

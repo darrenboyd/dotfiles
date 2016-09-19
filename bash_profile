@@ -10,14 +10,14 @@ export VISUAL="vim +1"
 export EDITOR=$VISUAL
 export GIT_EDITOR="vim +1"
 
-if [[ -d ~/.rvm/bin ]] ; then
-  PATH=~/.rvm/bin:$PATH
-fi
 if [[ -d ~/.npm-packages/bin ]]; then
   export PATH=~/.npm-packages/bin:$PATH
 fi
 if [[ -d ~/.local/bin ]] ; then
   PATH=~/.local/bin:$PATH
+fi
+if [[ -d ~/.node-packages/bin ]] ; then
+  PATH=~/.node-packages/bin:$PATH
 fi
 export PATH=~/bin:/usr/local/bin:/usr/local/sbin:$PATH
 
@@ -28,13 +28,6 @@ fi
 
 if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
   export TERM=xterm-256color
-fi
-
-if [[ -s ~/.rvm/scripts/rvm ]] ; then source ~/.rvm/scripts/rvm ; fi
-
-if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
-  source /usr/local/share/chruby/chruby.sh;
-  chruby 2.3.1
 fi
 
 if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then
@@ -48,3 +41,16 @@ fi
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# if [[ -s ~/.rvm/scripts/rvm ]]; then
+#   source ~/.rvm/scripts/rvm ;
+# fi
+
+if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
+  source /usr/local/share/chruby/chruby.sh;
+  chruby 2.3.1
+fi
+
+# if [[ -d ~/.rvm/bin ]] ; then
+#   PATH=~/.rvm/bin:$PATH
+# fi

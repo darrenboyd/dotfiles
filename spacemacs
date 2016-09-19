@@ -29,8 +29,7 @@ values."
      emacs-lisp
      git
      (ruby :variables
-           ruby-enable-ruby-on-rails-support t
-           ruby-enable-enh-ruby-support t)
+           ruby-enable-ruby-on-rails-support t)
      ruby-on-rails
      markdown
      javascript
@@ -266,6 +265,20 @@ you should place your code here."
   (setq-default js2-basic-offset 2
                 js-indent-level 2)
   (which-function-mode)
+  (setq-default
+   ;; js2-mode
+   js2-basic-offset 2
+   ;; web-mode
+   css-indent-offset 2
+   web-mode-markup-indent-offset 2
+   web-mode-css-indent-offset 2
+   web-mode-code-indent-offset 2
+   web-mode-attr-indent-offset 2)
+  (defun save-buffer-always ()
+    "Save the buffer even it is not modified."
+    (interactive)
+    (set-buffer-modified-p t)
+    (save-buffer))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

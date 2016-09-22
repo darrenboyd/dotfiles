@@ -113,7 +113,7 @@ values."
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
    ;; size to make separators look not too crappy.
    dotspacemacs-default-font '("Ubuntu Mono"
-                               :size 16
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -279,6 +279,27 @@ you should place your code here."
     (interactive)
     (set-buffer-modified-p t)
     (save-buffer))
+
+  (defun hippie-expand-ruby-symbols (orig-fun &rest args)
+    (if (eq major-mode 'ruby-mode)
+        (let ((table (make-syntax-table ruby-mode-syntax-table)))
+          (modify-syntax-entry ?: "." table)
+          (with-syntax-table table (apply orig-fun args)))
+      (apply orig-fun args)))
+
+  (advice-add 'hippie-expand :around #'hippie-expand-ruby-symbols)
+
+  (global-set-key (kbd "s-1") 'eyebrowse-switch-to-window-config-1)
+  (global-set-key (kbd "s-2") 'eyebrowse-switch-to-window-config-2)
+  (global-set-key (kbd "s-3") 'eyebrowse-switch-to-window-config-3)
+  (global-set-key (kbd "s-4") 'eyebrowse-switch-to-window-config-4)
+  (global-set-key (kbd "s-5") 'eyebrowse-switch-to-window-config-5)
+  (global-set-key (kbd "s-6") 'eyebrowse-switch-to-window-config-6)
+  (global-set-key (kbd "s-7") 'eyebrowse-switch-to-window-config-7)
+  (global-set-key (kbd "s-8") 'eyebrowse-switch-to-window-config-8)
+  (global-set-key (kbd "s-9") 'eyebrowse-switch-to-window-config-9)
+  (global-set-key (kbd "s-0") 'eyebrowse-switch-to-window-config-0)
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will

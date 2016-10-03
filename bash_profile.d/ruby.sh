@@ -1,10 +1,10 @@
 # Inspiration from http://github.com/hashrocket/dotmatrix/blob/master/.hashrc
 
-alias rc='bin/rails console'
-alias rg='bin/rails generate'
-alias rd='bin/rails destroy'
-alias rs='bin/rails server'
-alias rdb='bin/rails dbconsole -p'
+alias rc='spring rails console'
+alias rg='spring rails generate'
+alias rd='spring rails destroy'
+alias rs='spring rails server'
+alias rdb='spring rails dbconsole -p'
 
 alias ss='spring stop'
 
@@ -16,10 +16,10 @@ function fs() {
   fi
 }
 
-alias dm='rails db:migrate'
-alias dmt='rails db:test:prepare'
-alias dmu='rails db:rollback'
-alias dmr='rails db:migrate:redo'
+alias dm='spring rake db:migrate'
+alias dmt='spring rake db:test:prepare'
+alias dmu='spring rake db:rollback'
+alias dmr='spring rake db:migrate:redo'
 
 alias gua='bundle exec guard'
 

@@ -49,9 +49,9 @@ values."
      html
      yaml
      ;; org
-     ;; (shell :variables
-     ;;        shell-default-height 30
-     ;;        shell-default-position 'bottom)
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
@@ -310,11 +310,17 @@ you should place your code here."
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; For ruby
   (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (add-hook 'yaml-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+  (add-hook 'haml-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; For Javascript
   (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
+
   (setq ruby-insert-encoding-magic-comment nil)
   (setq-default js2-basic-offset 2
                 js-indent-level 2)
+
+  (set-default 'truncate-lines t)
+
   (which-function-mode)
   (setq-default
    ;; js2-mode

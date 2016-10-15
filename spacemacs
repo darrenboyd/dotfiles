@@ -357,6 +357,8 @@ you should place your code here."
   (global-set-key (kbd "s-9") 'eyebrowse-switch-to-window-config-9)
   (global-set-key (kbd "s-0") 'eyebrowse-switch-to-window-config-0)
 
+  (add-hook 'text-mode-hook 'spacemacs/toggle-truncate-lines-off)
+
 
   )
 

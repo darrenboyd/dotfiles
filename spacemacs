@@ -43,15 +43,16 @@ values."
      ;; git
      markdown
      (ruby :variables
+           ruby-enable-enh-ruby-mode t
            ruby-enable-ruby-on-rails-support t)
      ruby-on-rails
      javascript
      html
      yaml
      ;; org
-     (shell :variables
-            shell-default-height 30
-            shell-default-position 'bottom)
+     ;; (shell :variables
+     ;;        shell-default-height 30
+     ;;        shell-default-position 'bottom)
      ;; spell-checking
      ;; syntax-checking
      ;; version-control
@@ -346,19 +347,38 @@ you should place your code here."
 
   (advice-add 'hippie-expand :around #'hippie-expand-ruby-symbols)
 
-  (global-set-key (kbd "s-1") 'eyebrowse-switch-to-window-config-1)
-  (global-set-key (kbd "s-2") 'eyebrowse-switch-to-window-config-2)
-  (global-set-key (kbd "s-3") 'eyebrowse-switch-to-window-config-3)
-  (global-set-key (kbd "s-4") 'eyebrowse-switch-to-window-config-4)
-  (global-set-key (kbd "s-5") 'eyebrowse-switch-to-window-config-5)
-  (global-set-key (kbd "s-6") 'eyebrowse-switch-to-window-config-6)
-  (global-set-key (kbd "s-7") 'eyebrowse-switch-to-window-config-7)
-  (global-set-key (kbd "s-8") 'eyebrowse-switch-to-window-config-8)
-  (global-set-key (kbd "s-9") 'eyebrowse-switch-to-window-config-9)
-  (global-set-key (kbd "s-0") 'eyebrowse-switch-to-window-config-0)
-
   (add-hook 'text-mode-hook 'spacemacs/toggle-truncate-lines-off)
 
+  (define-key evil-normal-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+  (define-key evil-insert-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+  (define-key evil-visual-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+  (define-key evil-normal-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+  (define-key evil-insert-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+  (define-key evil-visual-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+  (define-key evil-normal-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+  (define-key evil-insert-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+  (define-key evil-visual-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+  (define-key evil-normal-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+  (define-key evil-insert-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+  (define-key evil-visual-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+  (define-key evil-normal-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+  (define-key evil-insert-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+  (define-key evil-visual-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+  (define-key evil-normal-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+  (define-key evil-insert-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+  (define-key evil-visual-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+  (define-key evil-normal-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+  (define-key evil-insert-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+  (define-key evil-visual-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+  (define-key evil-normal-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+  (define-key evil-insert-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+  (define-key evil-visual-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+  (define-key evil-normal-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+  (define-key evil-insert-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+  (define-key evil-visual-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+  (define-key evil-normal-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+  (define-key evil-insert-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+  (define-key evil-visual-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
 
   )
 

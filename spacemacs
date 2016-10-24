@@ -310,6 +310,7 @@ you should place your code here."
   ;; For python
   (add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   ;; For ruby
+  (add-hook 'enh-ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (add-hook 'ruby-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (add-hook 'yaml-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
   (add-hook 'haml-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))

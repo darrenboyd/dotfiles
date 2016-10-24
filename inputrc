@@ -4,7 +4,7 @@
 "\e[C": forward-char
 "\e[D": backward-char
 
-set completion-ignore-case on
+set completion-ignore-case off
 set completion-prefix-display-length 2
 C-j: menu-complete
 #C-k: menu-complete-backward

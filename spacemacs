@@ -31,6 +31,7 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     sql
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
@@ -43,7 +44,7 @@ values."
      ;; git
      markdown
      (ruby :variables
-           ruby-enable-enh-ruby-mode t
+           ruby-enable-enh-ruby-mode nil
            ruby-enable-ruby-on-rails-support t)
      ruby-on-rails
      javascript
@@ -318,6 +319,10 @@ you should place your code here."
   (add-hook 'js2-mode-hook #'(lambda () (modify-syntax-entry ?_ "w")))
 
   (setq ruby-insert-encoding-magic-comment nil)
+  (setq ruby-deep-indent-paren nil)
+  (setq ruby-deep-indent-paren-style nil)
+  (setq ruby-deep-arglist nil)
+
   (setq-default js2-basic-offset 2
                 js-indent-level 2)
 
@@ -380,6 +385,8 @@ you should place your code here."
   (define-key evil-normal-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
   (define-key evil-insert-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
   (define-key evil-visual-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+
+  ;; (add-hook 'after-change-major-mode-hook (lambda() (electric-indent-mode -1)))
 
   )
 

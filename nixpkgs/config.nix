@@ -1,7 +1,7 @@
 {
   packageOverrides = pkgs_: with pkgs_; {
     all = with pkgs; buildEnv {
-      name = "all";
+      name = "darrens";
       paths = [
         git
         direnv

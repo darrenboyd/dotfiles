@@ -44,7 +44,6 @@ values."
      ;; git
      markdown
      (ruby :variables
-           ruby-enable-enh-ruby-mode nil
            ruby-enable-ruby-on-rails-support t)
      ruby-on-rails
      javascript

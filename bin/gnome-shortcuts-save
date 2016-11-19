@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 
 dconf dump /org/gnome/desktop/wm/keybindings/ > db/gnome-shortcuts
+

@@ -350,6 +350,14 @@ you should place your code here."
           (with-syntax-table table (apply orig-fun args)))
       (apply orig-fun args)))
 
+  (defun search-next-and-scroll-to-top ()
+    "Search to the next result, and scroll to the top"
+    (interactive)
+    (evil-search-next)
+    (evil-scroll-line-to-top nil))
+
+  (define-key evil-normal-state-map (kbd "M-n") 'search-next-and-scroll-to-top)
+
   (advice-add 'hippie-expand :around #'hippie-expand-ruby-symbols)
 
   (add-hook 'text-mode-hook 'spacemacs/toggle-truncate-lines-off)

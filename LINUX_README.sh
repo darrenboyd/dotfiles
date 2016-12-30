@@ -57,3 +57,6 @@ sudo apt install postgresql-9.4 postgresql-client-9.4 libpq-dev
 
 sudo -u postgres createuser --superuser darren
 createdb darren
+
+sudo add-apt-repository ppa:stebbins/handbrake-releases
+

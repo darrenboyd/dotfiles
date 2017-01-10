@@ -28,6 +28,9 @@ sudo apt install insync
 
 sudo apt install enpass
 
+# OTHER SUDO APT INSTALL...
+# gnome-sushi diodon
+
 
 # Ruby
 # This is for ruby-build to work...

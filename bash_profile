@@ -48,9 +48,12 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
   source /usr/local/share/chruby/chruby.sh;
-  chruby 2.3.1
+  chruby 2.3.3
 fi
 
 # if [[ -d ~/.rvm/bin ]] ; then
 #   PATH=~/.rvm/bin:$PATH
 # fi
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"

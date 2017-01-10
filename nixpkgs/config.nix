@@ -5,14 +5,11 @@
       paths = [
         git
         direnv
-        elixir
-        erlang
         file
         graphviz
         nix
         nodejs
         silver-searcher
-        watchman
       ];
     };
   };

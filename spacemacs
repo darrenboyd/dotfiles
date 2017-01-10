@@ -39,9 +39,10 @@ values."
      ;; ----------------------------------------------------------------
      helm
      auto-completion
+     ;; perspectives
      ;; better-defaults
      emacs-lisp
-     ;; git
+     git
      markdown
      (ruby :variables
            ruby-enable-ruby-on-rails-support t)

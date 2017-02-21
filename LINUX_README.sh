@@ -9,13 +9,15 @@ sudo apt install openssh-server
 
 # From: https://www.insynchq.com/downloads
 
-wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key \
-  | sudo apt-key add -
+# wget -qO - https://d2t3ff60b2tol4.cloudfront.net/services@insynchq.com.gpg.key \
+#   | sudo apt-key add -
+# 
+# sudo cp etc/insync.list /etc/apt/sources.list.d/
+# 
+# sudo apt update
+# sudo apt install insync
 
-sudo cp etc/insync.list /etc/apt/sources.list.d/
-
-sudo apt update
-sudo apt install insync
+# Insync now intalls entirely from a package (including the ppa)
 
 
 # GoldenDict stuff

@@ -23,9 +23,9 @@ ed() { emacsclient -qc "$@" & }
 
 et() { emacsclient -t "$@"; }
 
-if [ -e /usr/bin/gnome-open ]; then
+if [ -e /usr/bin/xdg-open ]; then
   function o() {
-    gnome-open $* >& /dev/null
+    xdg-open $* >& /dev/null
   }
 else
   alias o='open'

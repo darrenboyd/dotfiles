@@ -42,9 +42,9 @@ fi
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
 
-# if [[ -s ~/.rvm/scripts/rvm ]]; then
-#   source ~/.rvm/scripts/rvm ;
-# fi
+if [[ -s ~/.rvm/scripts/rvm ]]; then
+   source ~/.rvm/scripts/rvm ;
+fi
 
 if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
   source /usr/local/share/chruby/chruby.sh;

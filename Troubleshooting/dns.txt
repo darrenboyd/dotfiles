@@ -1,0 +1,10 @@
+# dnsmasq should be running
+pstree -sp $(pidof dnsmasq)
+
+# E.g.
+# systemd(1)───NetworkManager(4619)───dnsmasq(4648)
+
+systemctl status network-manager
+# Lots of output, should show dnsmasq and dhclient
+
+systemctl restart network-manager

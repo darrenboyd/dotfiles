@@ -1,0 +1,2 @@
+# wget -O - http://repo.sinew.in/keys/enpass-linux.key | apt-key add -
+deb http://repo.sinew.in/ stable main

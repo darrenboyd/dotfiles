@@ -62,3 +62,6 @@ createdb darren
 
 sudo add-apt-repository ppa:stebbins/handbrake-releases
 
+# For MPV
+# https://launchpad.net/~djcj/+archive/ubuntu/vapoursynth
+sudo add-apt-repository ppa:djcj/vapoursynth

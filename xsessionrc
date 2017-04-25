@@ -3,13 +3,13 @@
 # xinput --set-prop 11 "Device Accel Constant Deceleration" 5
 # xinput --set-prop 11 "Device Accel Adaptive Deceleration" 1
 
-ids=$(xinput list | grep 'Logitech Gaming Mouse' | sed -n 's/.*id=\([0-9][0-9]\?\).*/\1/p')
-
-for i in $ids
-do
-  xinput --set-prop $i "Device Accel Constant Deceleration" 5
-  xinput --set-prop $i "Device Accel Adaptive Deceleration" 3
-  # xinput set-prop $i 'Device Accel Profile' -1
-  # xinput set-prop $i 'Device Accel Constant Deceleration' 2.5
-  # xinput set-prop $i 'Device Accel Velocity Scaling' 1.0
-done
+# ids=$(xinput list | grep 'Logitech Gaming Mouse' | sed -n 's/.*id=\([0-9][0-9]\?\).*/\1/p')
+# 
+# for i in $ids
+# do
+#   xinput --set-prop $i "Device Accel Constant Deceleration" 5
+#   xinput --set-prop $i "Device Accel Adaptive Deceleration" 3
+#   # xinput set-prop $i 'Device Accel Profile' -1
+#   # xinput set-prop $i 'Device Accel Constant Deceleration' 2.5
+#   # xinput set-prop $i 'Device Accel Velocity Scaling' 1.0
+# done

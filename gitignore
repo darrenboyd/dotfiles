@@ -1,6 +1,7 @@
 .DS_Store
 Thumbs.db
 .redcar
+.dir-locals.el
 .agignore
 .envrc
 .tags

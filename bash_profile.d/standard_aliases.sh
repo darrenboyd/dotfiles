@@ -1,8 +1,8 @@
 alias reload='source ~/.bash_profile && echo "Reloaded ~/.bash_profile"'
 
-alias l='ls -l'
-alias ll='ls -la'
-alias lrt='ls -lrt'
+alias l='ls -lh'
+alias ll='ls -lha'
+alias lrt='ls -lhrt'
 
 alias ..='cd ..'
 alias cd..='cd ..'

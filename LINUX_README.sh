@@ -65,3 +65,9 @@ sudo add-apt-repository ppa:stebbins/handbrake-releases
 # For MPV
 # https://launchpad.net/~djcj/+archive/ubuntu/vapoursynth
 sudo add-apt-repository ppa:djcj/vapoursynth
+
+# For Plex
+# https://support.plex.tv/hc/en-us/articles/235974187-Enable-repository-updating-for-supported-Linux-server-distributions
+# echo deb https://downloads.plex.tv/repo/deb ./public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+# curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
+

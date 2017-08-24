@@ -46,7 +46,9 @@ values."
      git
      markdown
      (ruby :variables
-           ruby-enable-ruby-on-rails-support t)
+           ruby-enable-ruby-on-rails-support t
+           ruby-enable-enh-ruby-mode nil
+           )
      ruby-on-rails
      javascript
      html
@@ -67,7 +69,7 @@ values."
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
-   dotspacemacs-excluded-packages '()
+   dotspacemacs-excluded-packages '(rubocop)
    ;; Defines the behaviour of Spacemacs when installing packages.
    ;; Possible values are `used-only', `used-but-keep-unused' and `all'.
    ;; `used-only' installs only explicitly used packages and uninstall any
@@ -150,6 +152,11 @@ values."
                                :powerline-scale 1.1)
    ;; The leader key
    dotspacemacs-leader-key "SPC"
+   ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
+   ;; (default "SPC")
+   dotspacemacs-emacs-command-key "SPC"
+   ;; The key used for Vim Ex commands (default ":")
+   dotspacemacs-ex-command-key ":"
    ;; The leader key accessible in `emacs state' and `insert state'
    ;; (default "M-m")
    dotspacemacs-emacs-leader-key "M-m"
@@ -157,11 +164,8 @@ values."
    ;; pressing `<leader> m`. Set it to `nil` to disable it. (default ",")
    dotspacemacs-major-mode-leader-key ","
    ;; Major mode leader key accessible in `emacs state' and `insert state'.
-   ;; (default "C-M-m)
+   ;; (default "C-M-m")
    dotspacemacs-major-mode-emacs-leader-key "C-M-m"
-   ;; The key used for Emacs commands (M-x) (after pressing on the leader key).
-   ;; (default "SPC")
-   dotspacemacs-emacs-command-key "SPC"
    ;; These variables control whether separate commands are bound in the GUI to
    ;; the key pairs C-i, TAB and C-m, RET.
    ;; Setting it to a non-nil value, allows for separate commands under <C-i>
@@ -255,8 +259,18 @@ values."
    ;; scrolling overrides the default behavior of Emacs which recenters point
    ;; when it reaches the top or bottom of the screen. (default t)
    dotspacemacs-smooth-scrolling t
-   ;; If non nil line numbers are turned on in all `prog-mode' and `text-mode'
-   ;; derivatives. If set to `relative', also turns on relative line numbers.
+   ;; Control line numbers activation.
+   ;; If set to `t' or `relative' line numbers are turned on in all `prog-mode' and
+   ;; `text-mode' derivatives. If set to `relative', line numbers are relative.
+   ;; This variable can also be set to a property list for finer control:
+   ;; '(:relative nil
+   ;;   :disabled-for-modes dired-mode
+   ;;                       doc-view-mode
+   ;;                       markdown-mode
+   ;;                       org-mode
+   ;;                       pdf-view-mode
+   ;;                       text-mode
+   ;;   :size-limit-kb 1000)
    ;; (default nil)
    dotspacemacs-line-numbers '(:text-mode t)
    ;; Code folding method. Possible values are `evil' and `origami'.
@@ -333,12 +347,15 @@ you should place your code here."
   (setq-default
    ;; js2-mode
    js2-basic-offset 2
+   js2-strict-missing-semi-warning nil
+   js2-missing-semi-one-line-override t
    ;; web-mode
    css-indent-offset 2
    web-mode-markup-indent-offset 2
    web-mode-css-indent-offset 2
    web-mode-code-indent-offset 2
    web-mode-attr-indent-offset 2)
+
   (defun save-buffer-always ()
     "Save the buffer even it is not modified."
     (interactive)
@@ -364,36 +381,42 @@ you should place your code here."
 
   (add-hook 'text-mode-hook 'spacemacs/toggle-truncate-lines-off)
 
-  (define-key evil-normal-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
-  (define-key evil-insert-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
-  (define-key evil-visual-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
-  (define-key evil-normal-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
-  (define-key evil-insert-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
-  (define-key evil-visual-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
-  (define-key evil-normal-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
-  (define-key evil-insert-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
-  (define-key evil-visual-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
-  (define-key evil-normal-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
-  (define-key evil-insert-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
-  (define-key evil-visual-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
-  (define-key evil-normal-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
-  (define-key evil-insert-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
-  (define-key evil-visual-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
-  (define-key evil-normal-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
-  (define-key evil-insert-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
-  (define-key evil-visual-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
-  (define-key evil-normal-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
-  (define-key evil-insert-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
-  (define-key evil-visual-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
-  (define-key evil-normal-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
-  (define-key evil-insert-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
-  (define-key evil-visual-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
-  (define-key evil-normal-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
-  (define-key evil-insert-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
-  (define-key evil-visual-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
-  (define-key evil-normal-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
-  (define-key evil-insert-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
-  (define-key evil-visual-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+  ;; https://github.com/felipeochoa/rjsx-mode
+  ;; (add-to-list 'auto-mode-alist '("components\\/.*\\.js\\'" . rjsx-mode))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . web-mode))
+
+  (add-to-list 'spacemacs-indent-sensitive-modes 'sql-mode)
+
+  ;; (define-key evil-normal-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+  ;; (define-key evil-insert-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+  ;; (define-key evil-visual-state-map (kbd "M-1") 'eyebrowse-switch-to-window-config-1)
+  ;; (define-key evil-normal-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+  ;; (define-key evil-insert-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+  ;; (define-key evil-visual-state-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
+  ;; (define-key evil-normal-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+  ;; (define-key evil-insert-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+  ;; (define-key evil-visual-state-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
+  ;; (define-key evil-normal-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+  ;; (define-key evil-insert-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+  ;; (define-key evil-visual-state-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
+  ;; (define-key evil-normal-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+  ;; (define-key evil-insert-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+  ;; (define-key evil-visual-state-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+  ;; (define-key evil-normal-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+  ;; (define-key evil-insert-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+  ;; (define-key evil-visual-state-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+  ;; (define-key evil-normal-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+  ;; (define-key evil-insert-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+  ;; (define-key evil-visual-state-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+  ;; (define-key evil-normal-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+  ;; (define-key evil-insert-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+  ;; (define-key evil-visual-state-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+  ;; (define-key evil-normal-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+  ;; (define-key evil-insert-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+  ;; (define-key evil-visual-state-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+  ;; (define-key evil-normal-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+  ;; (define-key evil-insert-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+  ;; (define-key evil-visual-state-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
 
   ;; (add-hook 'after-change-major-mode-hook (lambda() (electric-indent-mode -1)))
 

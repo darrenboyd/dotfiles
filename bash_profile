@@ -43,15 +43,3 @@ if [[ -s ~/.rvm/scripts/rvm ]]; then
    source ~/.rvm/scripts/rvm ;
 fi
 
-# if [[ -s /usr/local/share/chruby/chruby.sh ]]; then
-#   source /usr/local/share/chruby/chruby.sh;
-#   chruby 2.3.3
-# fi
-
-# if [[ -d ~/.rvm/bin ]] ; then
-#   PATH=~/.rvm/bin:$PATH
-# fi
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/darren/.sdkman"
-[[ -s "/home/darren/.sdkman/bin/sdkman-init.sh" ]] && source "/home/darren/.sdkman/bin/sdkman-init.sh"

@@ -16,12 +16,10 @@ alias more='less'
 
 alias lc='wc -l'
 
+alias ed='emacs &'
+
 export CLICOLOR=1
 export LSCOLORS=gxgxcxdxbxegedabagacad
-
-ed() { emacsclient -qc "$@" & }
-
-et() { emacsclient -t "$@"; }
 
 if [ -e /usr/bin/xdg-open ]; then
   function o() {

@@ -18,6 +18,8 @@ alias lc='wc -l'
 
 alias ed='emacs &'
 
+alias json-pretty='python -m json.tool'
+
 export CLICOLOR=1
 export LSCOLORS=gxgxcxdxbxegedabagacad
 

@@ -3,7 +3,7 @@ require 'pathname'
 LINK_FILES = %w(irbrc irbrc.d railsrc railsrc.d
                 bash_profile bash_profile.d bashrc
                 inputrc gitignore rvmrc psqlrc
-                spacemacs xsessionrc
+		spacemacs xsessionrc guard.rb
 )
 INSERT_FILES = %w(gemrc gitconfig)
 

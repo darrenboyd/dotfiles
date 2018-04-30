@@ -52,6 +52,22 @@ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-
 sudo apt-get update
 sudo apt install postgresql-9.4 postgresql-client-9.4 libpq-dev
 
+
+# Creating role and database...
+
+    $ sudo su - postgres
+    postgres@banhmi:~$ psql
+    psql (10.1)
+    Type "help" for help.
+    
+    postgres=# create role darren SUPERUSER LOGIN REPLICATION CREATEDB CREATEROLE;
+    CREATE ROLE
+    postgres=# create database darren owner darren;
+    CREATE DATABASE
+    postgres=# \q
+    $ logout
+
+
 # For rails to easily login as current user, change this line in pg_hba.conf
 # host    all             all             127.0.0.1/32            md5
 # To this:

@@ -28,3 +28,8 @@ alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/tes
 # decent MRI GC settings for faster local development/test
 export RUBY_GC_MALLOC_LIMIT_MAX=90000000
 export RUBY_GC_HEAP_FREE_SLOTS=200000
+
+
+if [[ -d ~/.yarn/bin ]]; then
+    export PATH=~/.yarn/bin:$PATH
+fi

@@ -16,7 +16,7 @@ alias more='less'
 
 alias lc='wc -l'
 
-alias ed='emacs &'
+alias ed='emacs --geometry 120x48 &'
 
 alias json-pretty='python -m json.tool'
 

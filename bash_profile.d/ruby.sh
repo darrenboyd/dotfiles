@@ -16,6 +16,14 @@ function fs() {
   fi
 }
 
+function os() {
+  if [ -f Procfile.dev ]; then
+    overmind start -f Procfile.dev $*
+  else
+    overmind start $*
+  fi
+}
+
 alias dm='spring rake db:migrate'
 alias dmt='spring rake db:test:prepare'
 alias dmu='spring rake db:rollback'

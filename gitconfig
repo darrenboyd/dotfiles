@@ -32,6 +32,7 @@
   web = instaweb
   release  = log --pretty=format:'%s [%an -- %cr]' --no-merges --abbrev-commit --date=relative production..master
   lg  = log --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+  standup  = log --pretty=format:'%Cred%h%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative --author=darren
   lg2 = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
 
   st = status -s

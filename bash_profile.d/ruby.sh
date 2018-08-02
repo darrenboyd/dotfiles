@@ -8,11 +8,11 @@ alias rdb='spring rails dbconsole -p'
 
 alias ss='spring stop'
 
-function fs() {
+function os() {
   if [ -f Procfile.dev ]; then
-    foreman start -f Procfile.dev $*
+    overmind start -f Procfile.dev $*
   else
-    foreman start $*
+    overmind start $*
   fi
 }
 

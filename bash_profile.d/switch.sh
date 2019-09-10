@@ -4,3 +4,5 @@ switch() {
   mv $2 $1 &&
   mv $1_orig $2
 }
+
+declare -fx switch

@@ -3,3 +3,4 @@ if [ `which brew` ]; then
     . `brew --prefix`/etc/bash_completion
   fi
 fi
+

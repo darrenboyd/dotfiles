@@ -10,3 +10,5 @@ first_of() {
     exit 1
   fi
 }
+
+declare -fx first_of

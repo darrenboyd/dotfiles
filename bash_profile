@@ -30,16 +30,6 @@ if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
   export TERM=xterm-256color
 fi
 
-if [ -e /home/darren/.nix-profile/etc/profile.d/nix.sh ]; then
-  source /home/darren/.nix-profile/etc/profile.d/nix.sh
-  export MANPATH=/home/darren/.nix-profile/share/man:$MANPATH
-fi # added by Nix installer
-
-if [[ `which direnv` ]]; then
-  eval "$(direnv hook bash)"
-fi
-
 if [[ -s ~/.rvm/scripts/rvm ]]; then
    source ~/.rvm/scripts/rvm ;
 fi
-

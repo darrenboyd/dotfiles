@@ -1,7 +1,8 @@
 require 'pathname'
 
 LINK_FILES = %w(irbrc irbrc.d railsrc railsrc.d
-                bash_profile bash_profile.d bashrc
+                bash_profile bash_profile.d
+                bashrc bashrc.d
                 inputrc gitignore rvmrc psqlrc
 		spacemacs xsessionrc guard.rb
 )

@@ -16,6 +16,8 @@ alias more='less'
 
 alias lc='wc -l'
 
+pathsplit() { echo "${PATH//:/$'\n'}"; }
+
 alias ed='emacs --geometry 120x48 &'
 
 alias json-pretty='python -m json.tool'

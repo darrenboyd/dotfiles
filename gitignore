@@ -10,3 +10,5 @@ Thumbs.db
 .vscode
 .ignore
 .projectile
+.overmind.sock
+

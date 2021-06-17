@@ -39,7 +39,3 @@ fi
 if [ -n "$DISPLAY" -a "$TERM" == "xterm" ]; then
   export TERM=xterm-256color
 fi
-
-# if [[ -s ~/.rvm/scripts/rvm ]]; then
-#    source ~/.rvm/scripts/rvm ;
-# fi

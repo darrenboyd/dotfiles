@@ -1,6 +1,6 @@
 require 'pathname'
 
-# old: rvmrc
+# Obsolete: rvmrc
 
 LINK_FILES = %w(irbrc irbrc.d railsrc railsrc.d
                 bash_profile bash_profile.d

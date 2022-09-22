@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+params = STDIN.readlines.join("\n")
+puts JSON.pretty_generate(eval(params))

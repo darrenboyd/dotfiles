@@ -1,0 +1,4 @@
+--database=postgresql
+--css=tailwind
+--skip-test
+--template=~/code/dotfiles/rails_template.rb

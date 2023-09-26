@@ -11,9 +11,3 @@ if detect_rails_root
 end
 
 require_rb_files_from(File.join(ENV['HOME'], '.railsrc.d'))
-
---database=postgresql
---css=tailwind
---skip-test
---template=~/code/dotfiles/rails_template.rb
-

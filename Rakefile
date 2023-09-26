@@ -2,7 +2,7 @@ require 'pathname'
 
 # Obsolete: rvmrc
 
-LINK_FILES = %w(irbrc irbrc.d railsrc railsrc.d
+LINK_FILES = %w(irbrc irbrc.d rails-console-rc rails-console-rc.d
                 bash_profile bash_profile.d
                 bashrc bashrc.d
                 inputrc gitignore psqlrc
@@ -57,7 +57,7 @@ task :install do
 
     matcher = Regexp.new(Regexp.escape(lines.first) + '.*?' + Regexp.escape(lines.last), Regexp::MULTILINE)
 
-    contents = File.exists?("#{home}/.#{file}") ? File.read("#{home}/.#{file}") : ''
+    contents = File.exist?("#{home}/.#{file}") ? File.read("#{home}/.#{file}") : ''
 
     puts "Insert content into #{home}/.#{file}"
     output =

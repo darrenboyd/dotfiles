@@ -36,6 +36,3 @@ run "gem install html2haml" # unneeded in bundle
   run "html2haml --erb app/views/layouts/#{f}.html.erb > app/views/layouts/#{f}.html.haml"
   run "rm -f app/views/layouts/#{f}.html.erb"
 end
-
-
-

@@ -2,7 +2,7 @@
 
 VIDEO="$(uvcdynctrl -l 2>&1 | grep 'HD Pro Webcam C920' | head -1 | awk '{print $1}')"
 
-uvcdynctrl -d $VIDEO -s "Zoom, Absolute" 120 2>&1 | grep -v " Controls"
+uvcdynctrl -d $VIDEO -s "Zoom, Absolute" 150 2>&1 | grep -v " Controls"
 uvcdynctrl -d $VIDEO -s "Focus, Automatic Continuous" 0 2>&1 | grep -v " Controls"
 uvcdynctrl -d $VIDEO -s "Focus, Absolute" 0 2>&1 | grep -v " Controls"
 

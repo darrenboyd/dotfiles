@@ -123,3 +123,10 @@ done
 if [[ `which direnv` ]]; then
   eval "$(direnv hook bash)"
 fi
+
+if [[ $(type -t "__vte_prompt_command") != function ]]; then
+  function __vte_prompt_command() {
+    return 0
+  }
+fi
+

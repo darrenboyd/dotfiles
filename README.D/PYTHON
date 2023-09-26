@@ -1,0 +1,21 @@
+
+j
+asdf install python latest
+asdf global python <latest>
+
+python -m pip install --upgrade pip
+pip install pipenv
+
+asdf update
+asdf reshim python
+
+# Now, in project directory...
+pipenv install
+pipenv shell
+pipenv update
+
+
+
+RESOURCES
+
+https://markcerv.com/2022/09/issue-w-pipenv-python-versions-after-upgrading-asdfs-python/

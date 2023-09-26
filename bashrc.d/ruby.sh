@@ -5,6 +5,7 @@ alias rg='rails generate'
 alias rd='rails destroy'
 alias rs='rails server'
 alias rdb='rails dbconsole -p'
+alias rrg='rails routes -g'
 
 #alias ss='spring stop'
 

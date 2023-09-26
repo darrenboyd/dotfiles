@@ -14,6 +14,8 @@ alias rm='rm -i'
 alias du='du -hc'
 alias more='less'
 
+alias nv='kitty --detach nvim "$*"'
+
 alias lc='wc -l'
 
 pathsplit() { echo "${PATH//:/$'\n'}"; }

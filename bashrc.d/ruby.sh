@@ -23,6 +23,7 @@ alias dmu='rake db:rollback'
 alias dmr='rake db:migrate:redo'
 
 alias gua='bundle exec guard'
+alias rcov='rm -fr coverage; COVERAGE=1 bundle exec rspec'
 
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'
 

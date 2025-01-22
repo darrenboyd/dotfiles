@@ -14,8 +14,8 @@ initializer 'frozen_string_in_generators.rb', <<-CODE
   Thor::Actions::CreateFile.prepend RailsGeneratorFrozenStringLiteralPrepend
 CODE
 
-gem "haml-rails"
-gem "devise"
+gem "phlex-rails"
+gem "lograge"
 
 gem_group :development, :test do
   gem "rspec-rails"

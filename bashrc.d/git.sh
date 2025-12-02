@@ -1,4 +1,6 @@
 
+alias ggm="git fetch origin main:main && git switch main && git pull --rebase --prune && git branch --verbose | grep -F \"[gone]\" | awk '{print \$1}' | xargs --no-run-if-empty -n 1 git branch --delete"
+
 # https://gist.github.com/igrigorik/6666860
 alias gho="o \`git remote -v | grep git@github.com | grep fetch | head -1 | cut -f2 | cut -d' ' -f1 | sed -e's/:/\//' -e 's/git@/https:\/\//'\`"
 
@@ -50,6 +52,11 @@ alias grc='git rebase --continue'
 
 alias gb='git branch -v'
 complete -o default -o nospace -F _git_branch gb
+alias gsc='git switch -c'
+complete -o default -o nospace -F _git_branch gsc
+alias gs='git switch'
+complete -o default -o nospace -F _git_branch gs
+alias gbu='git branch -v --no-merged'
 alias gbu='git branch -v --no-merged'
 alias gbum='git branch -v --no-merged master'
 

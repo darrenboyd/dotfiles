@@ -15,6 +15,8 @@ alias du='du -hc'
 alias more='less'
 
 alias nv='kitty --detach nvim "$*"'
+alias nvp='kitty --detach nvim --listen ./.nvim-server .'
+alias nvo='nvim --server ./.nvim-server --remote "$*"'
 
 alias lc='wc -l'
 
@@ -34,3 +36,5 @@ if [ -e /usr/bin/xdg-open ]; then
 else
   alias o='open'
 fi
+
+alias treefilter='tree --matchdirs --prune -P $*'

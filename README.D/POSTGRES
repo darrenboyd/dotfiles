@@ -1,0 +1,14 @@
+
+When installing postgres through asdf, add the following
+to the postgresql.conf file located in...
+
+.asdf/install/postgres/<version>/data/postgresql.conf
+
+
+listen_addresses = ''
+unix_socket_directories = '/home/darren/.pgdata'
+
+Some documentation for upgrading majors:
+
+https://www.postgresql.org/docs/current/upgrading.html#UPGRADING-VIA-PGDUMPALL
+

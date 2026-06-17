@@ -15,7 +15,8 @@ alias du='du -hc'
 alias more='less'
 
 alias nv='kitty --detach nvim "$*"'
-alias nvp='kitty --detach nvim --listen ./.nvim-server .'
+#alias nvp='nohup alacritty --title "NVIM ${PWD##*/}" --command nvim --listen ./.nvim-server . 0</dev/null 1>/dev/null 2>/dev/null &'
+alias nvp='kitty --detach --title "NVIM ${PWD##*/}" nvim --listen ./.nvim-server .'
 alias nvo='nvim --server ./.nvim-server --remote "$*"'
 
 alias lc='wc -l'

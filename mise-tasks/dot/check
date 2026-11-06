@@ -1,0 +1,156 @@
+#!/usr/bin/env bash
+#MISE description="Regression check: shell startup, links, dotfiles state, git push.default"
+#
+# Read-only. Exits 1 if any check FAILs. WARN and SKIP never fail.
+# Run: dotrun dot:check   (or, before mise.toml exists: bash mise-tasks/dot/check)
+# DOT_CHECK_PROFILE=container skips machine-specific checks (flyctl, Postgres env).
+#
+# Checks that depend on a later phase turn on by themselves once the repo
+# layout shows that phase is done (see the `phase_*` tests below).
+
+set -u
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+PROFILE="${DOT_CHECK_PROFILE:-machine}"
+STARTUP_WARN_SECONDS=0.15
+failures=0
+
+pass() { printf 'PASS  %s\n' "$1"; }
+fail() { printf 'FAIL  %s: %s\n' "$1" "$2"; failures=$((failures + 1)); }
+warn() { printf 'WARN  %s: %s\n' "$1" "$2"; }
+skip() { printf 'SKIP  %s: %s\n' "$1" "$2"; }
+
+# A shell started the way cron, editors and agents start one: no inherited
+# PATH. SSH_AUTH_SOCK and XDG_RUNTIME_DIR pass through so the old bash_profile
+# agent block doesn't spawn a new agent. Runs from $HOME because that block
+# writes to a cwd-relative path.
+clean_env=(env -i "HOME=$HOME" "USER=${USER:-}" "LOGNAME=${LOGNAME:-${USER:-}}"
+  PATH=/usr/bin:/bin TERM=dumb
+  "SSH_AUTH_SOCK=${SSH_AUTH_SOCK:-}" "XDG_RUNTIME_DIR=${XDG_RUNTIME_DIR:-}")
+
+# Interactive login shell (what kitty's `bash --login` runs), under `script`
+# so it has a TTY; without one bash prints job-control warnings to stderr.
+# Prints the command's stdout; its stderr goes to the file in $2.
+interactive() {
+  (cd "$HOME" && "${clean_env[@]}" script -qec "bash -lic '$1' 2>'$2'" /dev/null) | tr -d '\r'
+}
+
+phase1_done() { [ -f "$REPO/home/bashrc" ]; }
+git_config_owned() { [ -f "$REPO/config/git/config" ]; }
+
+tmp="$(mktemp -d)"
+trap 'rm -rf "$tmp"' EXIT
+
+# 1. Non-interactive login shell: tools and env.
+login_out="$(cd "$HOME" && "${clean_env[@]}" bash -lc '
+  for c in mise ruby node flyctl; do printf "cmd %s %s\n" "$c" "$(command -v "$c")"; done
+  printf "env PGHOST %s\nenv PGDATA %s\nenv GOPATH %s\n" "${PGHOST:+set}" "${PGDATA:+set}" "${GOPATH:+set}"
+' 2>"$tmp/login.err")"
+for c in mise ruby node flyctl; do
+  if [ "$PROFILE" = container ] && [ "$c" = flyctl ]; then skip "login: $c" "container profile"; continue; fi
+  path="$(awk -v c="$c" '$1=="cmd" && $2==c {print $3}' <<<"$login_out")"
+  if [ -z "$path" ]; then
+    fail "login: $c" "not found by bash -lc"
+  elif [ "$c" = ruby ] || [ "$c" = node ]; then
+    case "$path" in
+      */mise/shims/*|*/mise/installs/*) pass "login: $c ($path)" ;;
+      *) fail "login: $c" "resolves to $path, not a mise path" ;;
+    esac
+  else
+    pass "login: $c ($path)"
+  fi
+done
+for v in PGHOST PGDATA GOPATH; do
+  if [ "$PROFILE" = container ] && [ "$v" != GOPATH ]; then skip "login: \$$v" "container profile"; continue; fi
+  if grep -qx "env $v set" <<<"$login_out"; then pass "login: \$$v set"; else fail "login: \$$v" "not set by bash -lc"; fi
+done
+if [ -s "$tmp/login.err" ]; then
+  fail "login: stderr" "bash -lc wrote $(wc -l <"$tmp/login.err") line(s) to stderr"
+else
+  pass "login: no stderr"
+fi
+
+# 2. Interactive login shell: functions, alias, prompt, no stderr.
+# shellcheck disable=SC2016
+# Output lines are tagged, because /etc/bash.bashrc may print its own text first.
+int_out="$(interactive 'echo "FUNCS $(type -t switch dns first_of meta | tr "\n" " ")"; alias ll >/dev/null 2>&1 && echo ALIAS_LL; [ -n "$PS1" ] && echo PS1_SET' "$tmp/int.err")"
+funcs="$(sed -n 's/^FUNCS //p' <<<"$int_out" | xargs)"
+if [ "$funcs" = "function function function function" ]; then
+  pass "interactive: functions switch dns first_of meta"
+else
+  fail "interactive: functions" "expected 4 functions, got: '${funcs}'"
+fi
+if grep -qx ALIAS_LL <<<"$int_out"; then pass "interactive: alias ll"; else fail "interactive: alias ll" "not defined"; fi
+if grep -qx PS1_SET <<<"$int_out"; then pass "interactive: PS1 set"; else fail "interactive: PS1" "empty"; fi
+if [ -s "$tmp/int.err" ]; then
+  fail "interactive: stderr" "wrote $(wc -l <"$tmp/int.err") line(s): $(head -c 120 "$tmp/int.err" | tr '\n' ' ')"
+else
+  pass "interactive: no stderr"
+fi
+
+# 3. Machine-local hook: once phase 1 moves bashrc, ~/.bashrc.local must load.
+if ! phase1_done; then
+  skip "local: ~/.bashrc.local sourced" "phase 1 not done (home/bashrc absent)"
+elif [ ! -r "$HOME/.bashrc.local" ]; then
+  skip "local: ~/.bashrc.local sourced" "no ~/.bashrc.local on this machine"
+else
+  interactive 'set -x; . ~/.bashrc; set +x' "$tmp/trace.err" >/dev/null
+  if grep -qF '.bashrc.local' "$tmp/trace.err"; then
+    pass "local: ~/.bashrc.local sourced"
+  else
+    fail "local: ~/.bashrc.local" "exists but bashrc does not source it"
+  fi
+fi
+
+# 4. No dangling symlinks at depth 1 in ~ and ~/.config.
+dangling="$(find "$HOME" "$HOME/.config" -maxdepth 1 -xtype l 2>/dev/null)"
+if [ -z "$dangling" ]; then
+  pass "links: no dangling symlinks in ~ and ~/.config"
+else
+  fail "links: dangling" "$(tr '\n' ' ' <<<"$dangling")"
+fi
+
+# 5. Declared dotfiles all applied.
+if [ ! -f "$REPO/mise.toml" ]; then
+  skip "dotfiles: mise dot status --missing" "no repo mise.toml yet"
+elif ! command -v mise >/dev/null 2>&1; then
+  fail "dotfiles: mise" "mise not on PATH"
+elif mise -C "$REPO" dot status --missing >/dev/null 2>&1; then
+  pass "dotfiles: all declared entries applied"
+else
+  fail "dotfiles: missing entries" "run: mise -C $REPO dot status"
+fi
+
+# 6. git push.default, once the repo owns ~/.config/git/config.
+if ! git_config_owned; then
+  skip "git: push.default=simple" "config/git/config not in repo yet"
+else
+  origins="$(git config --show-origin --get-all push.default 2>/dev/null)"
+  if [ "$(wc -l <<<"$origins")" -eq 1 ] && [[ "$origins" == *"/.config/git/config"*simple ]]; then
+    pass "git: push.default=simple from ~/.config/git/config"
+  else
+    fail "git: push.default" "got: $(tr '\n' ' ' <<<"${origins:-<unset>}")"
+  fi
+fi
+
+# 7. Startup time: median of 5 interactive login shells. Warns, never fails.
+times=()
+cd "$HOME" || exit 1
+TIMEFORMAT=%R
+for _ in 1 2 3 4 5; do
+  times+=("$({ time "${clean_env[@]}" bash -lic exit </dev/null >/dev/null 2>&1; } 2>&1)")
+done
+cd - >/dev/null || exit 1
+median="$(printf '%s\n' "${times[@]}" | sort -n | sed -n 3p)"
+if awk -v m="$median" -v t="$STARTUP_WARN_SECONDS" 'BEGIN {exit !(m > t)}'; then
+  warn "startup: median ${median}s" "above ${STARTUP_WARN_SECONDS}s (baseline 0.09–0.10s)"
+else
+  pass "startup: median ${median}s"
+fi
+
+echo
+if [ "$failures" -gt 0 ]; then
+  echo "dot:check: $failures failure(s)"
+  exit 1
+fi
+echo "dot:check: all checks passed"

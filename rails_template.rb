@@ -1,4 +1,3 @@
-
 initializer 'frozen_string_in_generators.rb', <<-CODE
   return unless defined?(::Rails::Generators)
 
@@ -14,25 +13,17 @@ initializer 'frozen_string_in_generators.rb', <<-CODE
   Thor::Actions::CreateFile.prepend RailsGeneratorFrozenStringLiteralPrepend
 CODE
 
-gem "phlex-rails"
-gem "lograge"
+gem 'amazing_print', group: :development
+gem 'rails_semantic_logger'
+
+gem 'phlex-rails'
 
 gem_group :development, :test do
-  gem "rspec-rails"
-  gem "factory_bot_rails"
+  gem 'factory_bot_rails'
 end
 
 gem_group :development do
-  gem "hotwire-livereload"
+  gem 'hotwire-livereload'
 end
 
-run "bundle install"
-
-generate("rspec:install")
-
-
-run "gem install html2haml" # unneeded in bundle
-[ "mailer", "application" ].each do |f|
-  run "html2haml --erb app/views/layouts/#{f}.html.erb > app/views/layouts/#{f}.html.haml"
-  run "rm -f app/views/layouts/#{f}.html.erb"
-end
+run 'bundle install'

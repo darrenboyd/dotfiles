@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Upgrades an AWS CLI v2 installed by aws-cli-install (in ~/.local) to the latest release.
+set -euo pipefail
+
+install_dir="$HOME/.local/aws-cli"
+bin_dir="$HOME/.local/bin"
+
+if [ ! -x "$bin_dir/aws" ]; then
+  echo "AWS CLI isn't installed. Run aws-cli-install first." >&2
+  exit 1
+fi
+
+case "$(uname -m)" in
+  x86_64) arch=x86_64 ;;
+  aarch64 | arm64) arch=aarch64 ;;
+  *) echo "Unsupported architecture: $(uname -m)" >&2; exit 1 ;;
+esac
+
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+echo "Current: $("$bin_dir/aws" --version)"
+curl -fsSL "https://awscli.amazonaws.com/awscli-exe-linux-${arch}.zip" -o "$tmp/awscliv2.zip"
+unzip -q "$tmp/awscliv2.zip" -d "$tmp"
+"$tmp/aws/install" --install-dir "$install_dir" --bin-dir "$bin_dir" --update
+
+echo "Now:     $("$bin_dir/aws" --version)"
+

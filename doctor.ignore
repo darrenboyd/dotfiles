@@ -3,4 +3,48 @@
 # Add an entry only once you've decided it: app state, caches, or configs you
 # don't care to keep. `dotrun doctor` lists everything that is still undecided.
 
+alacritty
+autostart
+BraveSoftware
+btop
+chromium
+Claude
+cosmic
+cosmic-initial-setup-done
+dconf
+discord
+evince
+github-copilot
+google-chrome
+google-chrome-headless
+gtk-2.0
+gtk-3.0
+gtk-4.0
+heroku
+htop
+ibus
+Insync
+libreoffice
+mimeapps.list
+neofetch
+ngrok
+obsidian
 opencode   # only plugin deps (package.json, bun.lock, node_modules), no config
+pulse
+qalculate
+Signal
+Slack
+solaar
+sotalore
+spotify
+stripe
+user-dirs.locale
+user-dirs.dirs
+vlc
+xdg-terminals.list
+yarn
+zed
+zim
+zoom
+zoomus.conf
+

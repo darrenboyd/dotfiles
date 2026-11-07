@@ -18,6 +18,10 @@ Probed 2026-11-06 with `mise 2026.11.2 linux-x64 (2026-11-05)` and `gitleaks 8.3
 | `dot status --missing` | Exit 0 when all applied, exit 1 when any entry is missing |
 | `dot status --json` | `{"files":[…],"edits":[…],"history":…}`; each file has `target`, `source`, `mode`, `state` (`applied`, `missing`, …), `origin.config`. Doctor reads the declared set from `.files[].target` and `.edits[].path` |
 
+**Trust before anything else.** Once a repo-root `mise.toml` exists, every mise shim (`python3`, `ruby`, `node`, …) run from inside the repo fails with "Config files in ~/code/dotfiles/mise.toml are not trusted" until `mise trust` runs. Found in phase 1, 2026-11-06.
+
+**`dot add` re-sorts `[dotfiles]`.** Writing an entry rewrites the table in alphabetical key order. A comment stays attached to the key directly below it, so group headers end up labeling the wrong lines. Keep the table sorted and use only per-entry comments. Found in phase 4, 2026-11-06.
+
 ## Partial-file edits
 
 ```toml
@@ -40,6 +44,19 @@ Probed 2026-11-06 with `mise 2026.11.2 linux-x64 (2026-11-05)` and `gitleaks 8.3
 | Global tools | `bootstrap` installs tools from `~/.config/mise/config.toml` (jq installed in the probe). No separate `mise install` needed |
 | `[bootstrap.mise_shell_activate] bash = true` | Writes a `block:activate` into `~/.bash_profile`, and **refuses when `~/.bash_profile` is a symlink** ("target is a symlink; edit the real file instead"). In this repo `~/.bash_profile` is a managed symlink, so **don't use this section**. Activation stays in `profile.d/mise_shims.sh` and `bashrc.d/mise.sh` |
 | `bootstrap --only <part>` | Not a flag in 2026.11.2; use `mise bootstrap <part> apply` |
+
+### Fresh-machine findings (phase 3, ubuntu:24.04 container, 2026-11-06)
+
+| Finding | Fix in this repo |
+|---|---|
+| A new user always has the distro's stock `~/.bashrc` (from `/etc/skel`), so `bootstrap --from` refuses the whole dotfiles step | README uses `--force-dotfiles`, for fresh machines only |
+| `--from` trusts the repo only for its own run; afterwards `dot`/`dotrun` and mise shims inside the repo fail | `bootstrap` task runs `mise trust ~/code/dotfiles` |
+| `mise` isn't on the bootstrap task's PATH on a fresh box (exit 127) | the task calls `$(command -v mise \|\| echo ~/.local/bin/mise)` |
+| apt sources have no part of their own: they're applied inside `packages`, so `--skip packages` skips sources too, and `packages apply --dry-run` doesn't fetch keys | the test applied the sources (plus `jq`) for real, then ran `apt-get install --simulate` on all 29 packages: 713 to install, exit 0 |
+| `architectures` is a string (`"amd64"`), not a list | fixed |
+| `fingerprint` accepts a list. GitHub CLI's keyring holds two primary keys and signs with the newer one (`7F38…`), so pinning only the first one fails `apt-get update` with NO_PUBKEY | both keys are pinned. When pinning, list every `pub` fingerprint in the keyring, not just the first |
+
+**Running bootstrap on this machine:** it writes `/etc/apt/sources.list.d/mise-<name>.sources` next to the existing `docker.list`, `github-cli.list` and so on. apt then warns about duplicate sources. Remove the old files first (back them up), and mise's files replace them.
 
 ## Secret scan (gitleaks)
 

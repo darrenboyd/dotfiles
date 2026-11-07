@@ -1,3 +1,13 @@
 # Global tools, deployed (copied) to ~/.config/mise/config.toml by mise.toml.
+# Moved here from the old asdf-style ~/.tool-versions on 2026-11-06.
 [tools]
 bun = "latest"
+hugo = "0.163.0"
+lua = "5.4.7"
+neovim = "0.12.5"
+node = "22.13.0"
+poetry = "1.8.3"
+postgres = "18.3"
+python = "3.14.3t"
+ruby = "4.0.9"
+yarn = "1.22.22"

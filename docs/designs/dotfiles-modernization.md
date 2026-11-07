@@ -256,19 +256,42 @@ Personal repo, no release pipeline. GitHub (`darrenboyd/dotfiles`) is the distri
 
 ```bash
 curl https://mise.run | sh
-~/.local/bin/mise bootstrap --from https://github.com/darrenboyd/dotfiles.git --from-dir ~/code/dotfiles
+~/.local/bin/mise bootstrap --from https://github.com/darrenboyd/dotfiles.git --from-dir ~/code/dotfiles --force-dotfiles
 ```
+
+`--force-dotfiles` is for fresh machines only: it replaces the distro's stock `~/.bashrc`, which bootstrap would otherwise refuse to overwrite.
 
 The README starts with exactly those two lines.
 
 ## Next Steps
 
-1. Commit the in-flight asdf→mise and aws-cli work on its own `darren/<topic>` branch and merge it, so the reorg starts from a clean tree.
-2. Phase 0 spike, plus `mise-tasks/dot/check` run green by path.
-3. Phase 1 skeleton on `darren/modernize`.
-4. Phase 2 scripts, shell layers and ssh agent.
-5. Phase 4 adopt and doctor.
-6. Phase 3 bootstrap, checked in a container.
+1. ✅ Commit the in-flight asdf→mise and aws-cli work on its own `darren/<topic>` branch and merge it, so the reorg starts from a clean tree. (Done 2026-11-06.)
+2. ✅ Phase 0 spike, plus `mise-tasks/dot/check` run green by path. (Done 2026-11-06.)
+3. ✅ Phase 1 skeleton on `darren/modernize`. (Applied 2026-11-06; `dot:check` all green. Differences from the steps above: plain `mv` instead of `git mv`, so everything stays unstaged and recovery is `git restore . && bash ~/dotfiles-links-before.sh`, with no safety commit needed; `~/.gemrc` became a plain symlink, because the live file was identical to the repo's and held nothing machine-local; backups are in `~/dotfiles-bak/phase1-20261106`.)
+4. ✅ Phase 2 scripts, shell layers and ssh agent. (Applied 2026-11-06; `dot:check` all green.)
+   - `~/bin` → `bin/`. Its binaries moved to `~/.local/bin`, its AppImages to `~/Applications`.
+   - The ssh-agent block is replaced by `profile.d/50-ssh.sh` (gcr); you confirmed `ssh -T git@github.com` through gcr.
+   - Refined rule: a file goes to `profile.d` if non-interactive processes need it, so history and prompt-color exports stay in `bashrc.d`, and the Ruby GC exports moved to `profile.d`.
+   - `whiteboardCleaner` / `whiteboard-cleaner` were dropped in favor of the existing `bin/whiteboard-cleanup`.
+   - Login shells are unchanged for `bash -lc` PATH, verified against a before/after name and env diff.
+   - Recovery: `~/dotfiles-phase2-restore.sh`.
+5. ✅ Phase 4 adopt and doctor. (Applied 2026-11-06.)
+   - Added `mise-tasks/doctor`, `doctor.ignore`, `.gitleaks.toml`, `githooks/pre-commit` and `core.hooksPath`; gitleaks 8.30.1 is pinned in `[tools]`.
+   - Adopted kitty and nvim (symlinked dirs), gh `config.yml` and Claude `settings.json` (copy mode), and the statusline (symlink). Each was gitleaks-clean before it moved; backups are in `~/dotfiles-bak/phase4-20261106`.
+   - opencode was skipped: it holds only plugin deps, and it's listed in `doctor.ignore`.
+   - Proofs: the hook rejects a staged `ghp_` fixture and allows clean files, and doctor reports every seeded problem.
+   - Two gitleaks/mise quirks found: an empty `[allowlist]` makes gitleaks refuse to load its config, and `dot add` re-sorts `[dotfiles]` (both in docs/mise-notes.md).
+   - Doctor's first run: 131 findings, of which 127 are undecided `~/.config` entries; that list is phase 5.
+6. ✅ Phase 3 bootstrap, checked in a container. (Done 2026-11-06.)
+   - `mise.toml` declares 8 apt sources mirrored from this machine (key URLs and fingerprints verified), 29 packages, and the `bootstrap` task.
+   - Global tools moved from the old asdf-style `~/.tool-versions` into `config/mise/config.toml`. The versions are identical, and `~/.tool-versions` is retired to `~/dotfiles-bak/phase3-20261106`.
+   - The ubuntu:24.04 container test:
+     - ran `bootstrap --from` against a snapshot of the working tree (dotfiles, task, trust);
+     - applied all 8 sources for real;
+     - ran `apt-get --simulate` on all 29 packages: clean;
+     - installed node for real;
+     - ran `dot:check` in container mode: all pass except ruby, which wasn't built because packages and tools were skipped.
+   - Six fresh-machine findings were fixed, including `--force-dotfiles` in the README, trust in the task, and the GitHub key rotation (docs/mise-notes.md).
 7. Phase 5 cleanup pass (yours).
 
 ## The Assignment
@@ -809,19 +832,19 @@ Synthesized from this review's findings. Each task derives from a specific findi
   - Surfaced by: Section 3 regression rule (D7, D11), O6, O9
   - Files: mise-tasks/dot/check
   - Verify: `bash mise-tasks/dot/check` exits 0 on today's machine (push.default assertion off until phase 1)
-- [ ] **T4 (P1, human: ~30min / CC: ~5min)** — phase 1 — Back up real `~/.config/mise` before deploying `config/mise/config.toml`; recovery restores it
+- [x] **T4 (P1, human: ~30min / CC: ~5min)** — phase 1 — Back up real `~/.config/mise` before deploying `config/mise/config.toml`; recovery restores it
   - Surfaced by: Architecture A2
   - Files: docs (phase 1 steps), restore script
   - Verify: T3 proof in scratch HOME
-- [ ] **T5 (P2, human: ~30min / CC: ~5min)** — shell — `[ -r "$f" ] &&` guards in both source loops; `profile.d/ssh.sh` for gcr (D10) with phase 2 `ssh-add -l` and `ssh -T git@github.com` checks
+- [x] **T5 (P2, human: ~30min / CC: ~5min)** — shell — `[ -r "$f" ] &&` guards in both source loops; `profile.d/ssh.sh` for gcr (D10) with phase 2 `ssh-add -l` and `ssh -T git@github.com` checks
   - Surfaced by: Code Quality Q2; outside voice O7
   - Files: home/bashrc, home/bash_profile, home/profile.d/ssh.sh
   - Verify: dot:check green; ssh checks pass
-- [ ] **T6 (P2, human: ~30min / CC: ~5min)** — secrets — gitleaks in `[tools]`, `githooks/pre-commit`, `.gitleaks.toml`, doctor check 6; fixture proof in a scratch worktree
+- [x] **T6 (P2, human: ~30min / CC: ~5min)** — secrets — gitleaks in `[tools]`, `githooks/pre-commit`, `.gitleaks.toml`, doctor check 6; fixture proof in a scratch worktree
   - Surfaced by: outside voice O5 (D9)
   - Files: mise.toml, githooks/pre-commit, .gitleaks.toml, mise-tasks/doctor
   - Verify: fixture commit with a `ghp_…` token is rejected; the reorg commit is not
-- [ ] **T7 (P3, human: ~10min / CC: ~2min)** — cleanup guard — doctor flags symlinks into `~/.asdf`; phase 5 note: move PGDATA before removing `~/.asdf`
+- [x] **T7 (P3, human: ~10min / CC: ~2min)** — cleanup guard — doctor flags symlinks into `~/.asdf`; phase 5 note: move PGDATA before removing `~/.asdf`
   - Surfaced by: outside voice O11
   - Files: mise-tasks/doctor, docs
   - Verify: doctor lists `~/.pgdata`

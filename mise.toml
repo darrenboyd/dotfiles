@@ -1,4 +1,4 @@
-# The whole machine: dotfiles now; bootstrap comes later.
+# The whole machine: dotfiles now; bootstrap joins in phase 3.
 # Repo config is read only after `mise trust`, and only from this directory or
 # with `mise -C ~/code/dotfiles` (the `dot` / `dotrun` aliases).
 # See docs/designs/dotfiles-modernization.md and docs/mise-notes.md.
@@ -39,3 +39,111 @@
 [tools]
 # Used by githooks/pre-commit and mise-tasks/doctor.
 gitleaks = "8.30.1"
+
+# ---- Machine bootstrap: `mise bootstrap --from https://github.com/darrenboyd/dotfiles.git --from-dir ~/code/dotfiles`
+# Sources mirror what's live on this machine (2026-11-06). Each key URL was checked
+# against the fingerprint below; mise refuses keys that don't match.
+
+[bootstrap.apt.sources.claude-desktop]
+uris = "https://downloads.claude.ai/claude-desktop/apt/stable"
+suites = "stable"
+components = "main"
+architectures = "amd64"
+key = "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE"
+fingerprint = "31DDDE24DDFAB679F42D7BD2BAA929FF1A7ECACE"
+
+[bootstrap.apt.sources.docker]
+uris = "https://download.docker.com/linux/ubuntu"
+components = "stable"
+architectures = "amd64"
+key = "https://download.docker.com/linux/ubuntu/gpg"
+fingerprint = "9DC858229FC7DD38854AE2D88D81803C0EBFCD88"
+
+[bootstrap.apt.sources.github-cli]
+uris = "https://cli.github.com/packages"
+suites = "stable"
+components = "main"
+architectures = "amd64"
+key = "https://cli.github.com/packages/githubcli-archive-keyring.gpg"
+# GitHub signs with the newer 7F38… key; both are in its published keyring.
+fingerprint = ["2C6106201985B60E6C7AC87323F3D4EA75716059", "7F38BBB59D064DBCB3D84D725612B36462313325"]
+
+[bootstrap.apt.sources.google-chrome]
+uris = "https://dl.google.com/linux/chrome-stable/deb/"
+suites = "stable"
+components = "main"
+architectures = "amd64"
+key = "https://dl.google.com/linux/linux_signing_key.pub"
+fingerprint = "EB4C1BFD4F042F6DDDCCEC917721F63BD38B4796"
+
+[bootstrap.apt.sources.heroku]
+uris = "https://cli-assets.heroku.com/channels/stable/apt"
+suites = "./"
+key = "https://cli-assets.heroku.com/channels/stable/apt/release.key"
+fingerprint = "EAB29D16009525636E0A6605868C56076B935C6E"
+
+[bootstrap.apt.sources.insync]
+uris = "http://apt.insync.io/ubuntu"
+components = "non-free contrib"
+key = "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0xAEEB94E9C5A3B54ECFA4A66AA684470CACCAF35C"
+fingerprint = "AEEB94E9C5A3B54ECFA4A66AA684470CACCAF35C"
+
+[bootstrap.apt.sources.ngrok]
+uris = "https://ngrok-agent.s3.amazonaws.com"
+suites = "bookworm"
+components = "main"
+key = "https://ngrok-agent.s3.amazonaws.com/ngrok.asc"
+fingerprint = "F0271FCF712CF2E39901F1A30E61D3BBAAEE37FE"
+
+[bootstrap.apt.sources.signal]
+uris = "https://updates.signal.org/desktop/apt"
+suites = "xenial"
+components = "main"
+architectures = "amd64"
+key = "https://updates.signal.org/desktop/apt/keys.asc"
+fingerprint = "DBA36B5181D0C816F630E889D980A17457F6FB06"
+
+[bootstrap.packages]
+# From the sources above
+"apt:claude-desktop" = "latest"
+"apt:containerd.io" = "latest"
+"apt:docker-buildx-plugin" = "latest"
+"apt:docker-ce" = "latest"
+"apt:docker-ce-cli" = "latest"
+"apt:docker-compose-plugin" = "latest"
+"apt:gh" = "latest"
+"apt:google-chrome-stable" = "latest"
+"apt:heroku" = "latest"
+"apt:insync" = "latest"
+"apt:ngrok" = "latest"
+"apt:signal-desktop" = "latest"
+# Base and dev
+"apt:bind9-dnsutils" = "latest"   # dig, for bin/dns
+"apt:btop" = "latest"
+"apt:build-essential" = "latest"
+"apt:curl" = "latest"
+"apt:direnv" = "latest"
+"apt:git" = "latest"
+"apt:htop" = "latest"
+"apt:imagemagick" = "latest"      # bin/whiteboard-cleanup
+"apt:jq" = "latest"
+"apt:libffi-dev" = "latest"
+"apt:libpq-dev" = "latest"
+"apt:libssl-dev" = "latest"
+"apt:libyaml-dev" = "latest"
+"apt:tree" = "latest"
+"apt:vim" = "latest"
+"apt:xsel" = "latest"             # meta (clipboard)
+"apt:zlib1g-dev" = "latest"
+
+# Runs last on every `mise bootstrap`, so each step is safe to repeat.
+[tasks.bootstrap]
+description = "Machine-local setup the declarative parts can't express"
+run = [
+  # `bootstrap --from` trusts the repo only for its own run; keep it trusted so
+  # `dot`, `dotrun` and mise shims work inside ~/code/dotfiles afterwards.
+  # On a fresh box mise isn't on PATH yet; the installer puts it in ~/.local/bin.
+  "\"$(command -v mise || echo ~/.local/bin/mise)\" trust --quiet ~/code/dotfiles",
+  "[ -e ~/.psqlrc.local ] || touch ~/.psqlrc.local",
+  "git -C ~/code/dotfiles config core.hooksPath githooks",
+]

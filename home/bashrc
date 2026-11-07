@@ -116,9 +116,10 @@ if ! shopt -oq posix; then
   fi
 fi
 
-for a in `ls $HOME/.bashrc.d/*.sh`; do
-  source $a
+for f in "$HOME"/.bashrc.d/*.sh; do
+  [ -r "$f" ] && . "$f"
 done
+unset f
 
 if [[ `which direnv` ]]; then
   eval "$(direnv hook bash)"
@@ -130,3 +131,6 @@ if [[ $(type -t "__vte_prompt_command") != function ]]; then
   }
 fi
 
+
+# Machine-local settings, never in the repo.
+[ -r "$HOME/.bashrc.local" ] && . "$HOME/.bashrc.local"

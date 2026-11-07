@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Print your public IPv4 and IPv6 addresses.
+curl --silent https://api.ipify.org && echo && curl --silent https://api64.ipify.org && echo

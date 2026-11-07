@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+xrandr --output DP-1 --off  --output eDP-1 --mode 1920x1080 --primary --rate 59.98 --pos 0x0
+

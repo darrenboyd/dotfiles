@@ -1,0 +1,13 @@
+# ~/.bash_profile: login shells (kitty runs `bash --login`; also `bash -lc`).
+# Env and PATH first, for every login shell, then the interactive setup.
+# ~/.profile.d is deployed by mise from ~/code/dotfiles/home/profile.d.
+
+for f in "$HOME"/.profile.d/*.sh; do
+  [ -r "$f" ] && . "$f"
+done
+unset f
+
+# Machine-local settings, never in the repo.
+[ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
+
+[[ -s "$HOME/.bashrc" ]] && source "$HOME/.bashrc"

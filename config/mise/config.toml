@@ -1,0 +1,3 @@
+# Global tools, deployed (copied) to ~/.config/mise/config.toml by mise.toml.
+[tools]
+bun = "latest"

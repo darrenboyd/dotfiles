@@ -21,7 +21,6 @@ alias nvo='nvim --server ./.nvim-server --remote "$*"'
 
 alias lc='wc -l'
 
-pathsplit() { echo "${PATH//:/$'\n'}"; }
 
 alias ed='emacs --geometry 120x48 &'
 

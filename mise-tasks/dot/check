@@ -73,13 +73,20 @@ fi
 # 2. Interactive login shell: functions, alias, prompt, no stderr.
 # shellcheck disable=SC2016
 # Output lines are tagged, because /etc/bash.bashrc may print its own text first.
-int_out="$(interactive 'echo "FUNCS $(type -t switch dns first_of meta | tr "\n" " ")"; alias ll >/dev/null 2>&1 && echo ALIAS_LL; [ -n "$PS1" ] && echo PS1_SET' "$tmp/int.err")"
+int_out="$(interactive 'echo "FUNCS $(type -t switch meta man | tr "\n" " ")"; echo "CMDS $(type -t dns first_of myip pathsplit show_table | tr "\n" " ")"; alias ll >/dev/null 2>&1 && echo ALIAS_LL; alias dot >/dev/null 2>&1 && echo ALIAS_DOT; [ -n "$PS1" ] && echo PS1_SET' "$tmp/int.err")"
 funcs="$(sed -n 's/^FUNCS //p' <<<"$int_out" | xargs)"
-if [ "$funcs" = "function function function function" ]; then
-  pass "interactive: functions switch dns first_of meta"
+if [ "$funcs" = "function function function" ]; then
+  pass "interactive: functions switch meta man"
 else
-  fail "interactive: functions" "expected 4 functions, got: '${funcs}'"
+  fail "interactive: functions" "expected 3 functions, got: '${funcs}'"
 fi
+cmds="$(sed -n 's/^CMDS //p' <<<"$int_out" | xargs)"
+if [ "$cmds" = "file file file file file" ]; then
+  pass "interactive: bin scripts dns first_of myip pathsplit show_table"
+else
+  fail "interactive: bin scripts" "expected 5 files on PATH, got: '${cmds}'"
+fi
+if grep -qx ALIAS_DOT <<<"$int_out"; then pass "interactive: alias dot"; else fail "interactive: alias dot" "not defined"; fi
 if grep -qx ALIAS_LL <<<"$int_out"; then pass "interactive: alias ll"; else fail "interactive: alias ll" "not defined"; fi
 if grep -qx PS1_SET <<<"$int_out"; then pass "interactive: PS1 set"; else fail "interactive: PS1" "empty"; fi
 if [ -s "$tmp/int.err" ]; then
@@ -113,9 +120,9 @@ fi
 # 5. Declared dotfiles all applied.
 if [ ! -f "$REPO/mise.toml" ]; then
   skip "dotfiles: mise dot status --missing" "no repo mise.toml yet"
-elif ! command -v mise >/dev/null 2>&1; then
-  fail "dotfiles: mise" "mise not on PATH"
-elif mise -C "$REPO" dot status --missing >/dev/null 2>&1; then
+elif ! MISE="$(command -v mise || ls "$HOME/.local/bin/mise" 2>/dev/null)" || [ -z "$MISE" ]; then
+  fail "dotfiles: mise" "not on PATH and not at ~/.local/bin/mise"
+elif "$MISE" -C "$REPO" dot status --missing >/dev/null 2>&1; then
   pass "dotfiles: all declared entries applied"
 else
   fail "dotfiles: missing entries" "run: mise -C $REPO dot status"

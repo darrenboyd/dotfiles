@@ -28,11 +28,3 @@ alias rcov='rm -fr coverage; COVERAGE=1 bundle exec rspec'
 alias tt='[ -e log/test.log ] && cp -f /dev/null log/test.log && tail -f log/test.log'
 
 alias rup='git up; bundle install; yarn install; rake db:migrate'
-
-# decent MRI GC settings for faster local development/test
-export RUBY_GC_MALLOC_LIMIT_MAX=90000000
-export RUBY_GC_HEAP_FREE_SLOTS=200000
-
-show_table() {
-  psql -c "\\d+ $1" $2
-}

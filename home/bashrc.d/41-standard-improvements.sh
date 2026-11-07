@@ -12,12 +12,6 @@ touch() {
   /usr/bin/touch $1
 }
 
-myip() {
-  curl --silent 'https://api.ipify.org' \
-  && echo \
-  && curl --silent 'https://api64.ipify.org' \
-  && echo
-}
 
 _ssh_hosts() {
   grep "Host " ~/.ssh/config 2> /dev/null | sed -e "s/Host //g"

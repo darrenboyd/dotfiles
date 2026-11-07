@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Print the first of the given commands that exists, else exit 1.
+#   EDITOR=$(first_of "mate -w" "nano -w" vi)
+for arg in "$@"; do
+  command -v ${arg%% *} >/dev/null && { echo "$arg"; exit 0; }
+done
+exit 1

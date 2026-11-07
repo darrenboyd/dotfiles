@@ -1,4 +1,4 @@
 .DS_Store
 Thumbs.db
-bash_profile.d/local.sh
-bashrc.d/local.sh
+*.local
+config/gh/hosts.yml

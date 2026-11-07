@@ -1,17 +1,17 @@
-# START GENERATED
+# Global git config, deployed to ~/.config/git/config by mise (see mise.toml).
+# Machine-local bits (user, credential helpers) stay in ~/.gitconfig.
 [color]
   ui = true
 
 [core]
-  excludesfile = ~/.gitignore
-  editor = mvim -f
+  editor = vim
   quotepath = false
 
 [branch]
   autosetupmerge = true
 
 [push]
-	default = upstream
+	default = simple
 
 [diff]
   tool = gvimdiff
@@ -20,7 +20,7 @@
 	ff = false
 
 [alias]
-  ec = config --global -e
+  ec = "!${EDITOR:-vim} ~/code/dotfiles/config/git/config"
   co = checkout
   cob = checkout -b
   st = status
@@ -99,4 +99,3 @@
   ours = "!f() { git co --ours $@ && git add $@; }; f"
   theirs = "!f() { git co --theirs $@ && git add $@; }; f"
 
-# END GENERATED

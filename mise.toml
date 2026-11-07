@@ -1,0 +1,30 @@
+# The whole machine: dotfiles now; bootstrap comes later.
+# Repo config is read only after `mise trust`, and only from this directory or
+# with `mise -C ~/code/dotfiles` (the `dot` / `dotrun` aliases).
+# See docs/designs/dotfiles-modernization.md and docs/mise-notes.md.
+#
+# `dot add` rewrites [dotfiles] in sorted order, so keep it sorted and put any
+# comment directly above the entry it explains (comments travel with the key).
+
+[dotfiles]
+"~/.bash_profile"   = { source = "home/bash_profile" }
+"~/.bashrc"         = { source = "home/bashrc" }
+"~/.bashrc.d"       = { source = "home/bashrc.d" }
+"~/.config/git/config" = { source = "config/git/config" }
+"~/.config/git/ignore" = { source = "config/git/ignore" }
+# Copy: `mise use -g` rewrites this file, and a symlink would write into the repo.
+"~/.config/mise/config.toml" = { source = "config/mise/config.toml", mode = "copy" }
+"~/.gemrc"             = { source = "home/gemrc" }
+"~/.guard.rb"          = { source = "home/guard.rb" }
+"~/.inputrc"           = { source = "home/inputrc" }
+"~/.irbrc"             = { source = "home/irbrc" }
+"~/.irbrc.d"           = { source = "home/irbrc.d" }
+# Env and PATH for every login shell, loaded by bash_profile before bashrc.
+"~/.profile.d"         = { source = "home/profile.d" }
+"~/.psqlrc"            = { source = "home/psqlrc" }
+"~/.rails-console-rc"   = { source = "home/rails-console-rc" }
+"~/.rails-console-rc.d" = { source = "home/rails-console-rc.d" }
+"~/.railsrc"           = { source = "home/railsrc" }
+"~/.xsessionrc"        = { source = "home/xsessionrc" }
+# Scripts, on PATH via profile.d/90-path.sh.
+"~/bin"                = { source = "bin" }

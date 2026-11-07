@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Report whether a domain is registered (has an SOA record). http://gist.github.com/217660
+dig soa "$1" | grep -q "^$1" && echo "Registered" || echo "Available"

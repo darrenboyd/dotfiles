@@ -1,0 +1,6 @@
+# ~/.config entries (by name) and AI config paths (relative to ~) that this repo
+# deliberately does not track. One per line; `#` starts a comment.
+# Add an entry only once you've decided it: app state, caches, or configs you
+# don't care to keep. `dotrun doctor` lists everything that is still undecided.
+
+opencode   # only plugin deps (package.json, bun.lock, node_modules), no config

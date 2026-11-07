@@ -1,0 +1,8 @@
+# gitleaks config for this repo: default rules plus reviewed exceptions.
+[extend]
+useDefault = true
+
+# Add exceptions only after you've looked at the finding yourself, e.g.:
+# [[allowlists]]
+# description = "Reviewed false positive"
+# paths = ['''archive/osx''']

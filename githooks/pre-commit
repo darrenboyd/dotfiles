@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# Reject commits that stage a secret. Installed by `git config core.hooksPath githooks`
+# (the bootstrap task does this on a new machine). Findings are redacted.
+set -euo pipefail
+repo="$(git rev-parse --show-toplevel)"
+mise="$(command -v mise || echo "$HOME/.local/bin/mise")"
+exec "$mise" -C "$repo" x -- gitleaks git --pre-commit --staged --redact --no-banner \
+  --config "$repo/.gitleaks.toml" "$repo"

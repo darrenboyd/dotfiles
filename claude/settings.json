@@ -1,0 +1,101 @@
+{
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "paplay /home/darren/Documents/media/need-response.mp3"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "paplay /home/darren/Documents/media/work-finished.mp3"
+          }
+        ]
+      },
+      {
+        "_gstack_source": "gstack-timeline-stop",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/darren/.claude/skills/gstack/hosts/claude/hooks/timeline-stop-hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "_gstack_source": "gstack-session-update",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/home/darren/.claude/skills/gstack/bin/gstack-session-update"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "ruby-lsp@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true,
+    "darren@darrenboyd": true,
+    "compound-engineering@compound-engineering-plugin": true
+  },
+  "extraKnownMarketplaces": {
+    "darrenboyd": {
+      "source": {
+        "source": "git",
+        "url": "https://github.com/darrenboyd/claude-config.git"
+      }
+    },
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    }
+  },
+  "effortLevel": "xhigh",
+  "tui": "fullscreen",
+  "autoMode": {
+    "environment": [
+      "### Org-wide",
+      "**Organization**: SignumU (GitHub org, from origin remote github.com:SignumU/collaboratory.git) — internal name \"Collaboratory\" per CLAUDE.md",
+      "**Cloud provider(s)**: AWS S3 (Active Storage file hosting in production, per CLAUDE.md)",
+      "**Repository visibility**: not queryable here via gh — assuming private per shipped default; treat github.com:SignumU/collaboratory.git accordingly",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: Rails encrypted credentials (config/master.key, config/credentials/{production,test,development}.key — all gitignored)",
+      "**Default / protected branches**: main (per CLAUDE.md branching convention) — protected-branch status not queryable here via gh",
+      "**CI/CD deploy targets**: Heroku (heroku remote → git.heroku.com/signum-collaboratory-demo.git)",
+      "**Network posture**: WebMock blocks external HTTP in tests; allow-list 127.0.0.1 only (per CLAUDE.md)",
+      "**Source control**: GitHub (github.com:SignumU/collaboratory.git) and Heroku (git.heroku.com/signum-collaboratory-demo.git) — this repo's remotes only",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: Stripe (payments/subscriptions, webhook at /ingress/stripe), Discord (channel/role sync), GoodJob (background jobs), Mailpit (dev mail)",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: config/master.key, config/credentials/production.key, config/credentials/test.key, config/credentials/development.key, .envrc, tmp/development_secret.txt, tmp/local_secret.txt — credentials/secrets, not for commit or sharing outside this checkout",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: signum-collaboratory-demo (Heroku app, name does not contain 'prod' as a segment but is the only deploy target — treat as production-equivalent since it's the sole CI/CD deploy target); any namespace/host/container whose name carries prod or production as a whole word or segment",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries prod or production as a whole word or name segment",
+      "### User-specific",
+      "**Primary use of Claude Code**: Ruby on Rails web application development (Signum Plaza / Collaboratory) — routine under this repo",
+      "**Trusted repo**: /home/darren/signum/cl (github.com:SignumU/collaboratory.git, and its Heroku deploy remote git.heroku.com/signum-collaboratory-demo.git) — visibility not confirmed via gh, assume private per shipped default",
+      "**Org-specific CLIs**: None configured",
+      "Routine under darren/ prefix: feature branches follow the pattern darren/feature-name, PRs merge to main (per CLAUDE.md)"
+    ]
+  }
+}

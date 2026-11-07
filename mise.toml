@@ -10,10 +10,17 @@
 "~/.bash_profile"   = { source = "home/bash_profile" }
 "~/.bashrc"         = { source = "home/bashrc" }
 "~/.bashrc.d"       = { source = "home/bashrc.d" }
+# Copy: Claude Code and gstack rewrite this file. Pull edits back with `dot add --local --changed`.
+"~/.claude/settings.json" = { source = "claude/settings.json", mode = "copy" }
+"~/.claude/statusline-command.sh" = { source = "claude/statusline-command.sh" }
+# Copy: `gh config set` rewrites it. hosts.yml (the token) is never tracked.
+"~/.config/gh/config.yml" = { source = "config/gh/config.yml", mode = "copy" }
 "~/.config/git/config" = { source = "config/git/config" }
 "~/.config/git/ignore" = { source = "config/git/ignore" }
+"~/.config/kitty"      = { source = "config/kitty" }
 # Copy: `mise use -g` rewrites this file, and a symlink would write into the repo.
 "~/.config/mise/config.toml" = { source = "config/mise/config.toml", mode = "copy" }
+"~/.config/nvim"       = { source = "config/nvim" }
 "~/.gemrc"             = { source = "home/gemrc" }
 "~/.guard.rb"          = { source = "home/guard.rb" }
 "~/.inputrc"           = { source = "home/inputrc" }
@@ -28,3 +35,7 @@
 "~/.xsessionrc"        = { source = "home/xsessionrc" }
 # Scripts, on PATH via profile.d/90-path.sh.
 "~/bin"                = { source = "bin" }
+
+[tools]
+# Used by githooks/pre-commit and mise-tasks/doctor.
+gitleaks = "8.30.1"

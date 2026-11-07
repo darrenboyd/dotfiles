@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+#MISE description="Find drift between this repo and the machine: undeclared configs, stray scripts, secrets"
+#
+# Read-only. Exits 1 when anything is undecided or broken, 0 when clean.
+# Run: dotrun doctor
+# Each finding prints the next command to run. Decide each one: adopt it, add
+# it to doctor.ignore, or delete it.
+
+set -u
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+IGNORE="$REPO/doctor.ignore"
+MISE="$(command -v mise || echo "$HOME/.local/bin/mise")"
+findings=0
+
+section() { printf '\n== %s\n' "$1"; }
+finding() { printf '  %s\n' "$1"; [ -n "${2:-}" ] && printf '      → %s\n' "$2"; findings=$((findings + 1)); }
+ok() { printf '  ok: %s\n' "$1"; }
+
+ignored() { [ -f "$IGNORE" ] && grep -vE '^\s*(#|$)' "$IGNORE" | sed 's/\s*#.*//' | grep -qxF "$1"; }
+
+status_json="$("$MISE" -C "$REPO" dot status --json 2>/dev/null)"
+if [ -z "$status_json" ]; then
+  echo "doctor: could not read \`mise -C $REPO dot status --json\`" >&2
+  exit 2
+fi
+declared="$(jq -r '.files[].target, (.edits // [])[].path' <<<"$status_json" | sed "s#^~#$HOME#")"
+
+# 1. Declared but not applied.
+section "Declared dotfiles not applied"
+missing="$(jq -r '.files[] | select(.state != "applied") | "\(.target) (\(.state))"' <<<"$status_json")"
+if [ -z "$missing" ]; then ok "all $(jq '.files | length' <<<"$status_json") entries applied"
+else while read -r m; do finding "$m" "dot apply"; done <<<"$missing"; fi
+
+# 2. ~/.config entries that are neither declared nor ignored.
+section "Undecided ~/.config entries"
+n=0
+while read -r path; do
+  name="$(basename "$path")"
+  grep -qE "^$path(/|$)" <<<"$declared" && continue
+  ignored "$name" && continue
+  [ $n -eq 0 ] && printf '  adopt: dot add --local --source config/<name> ~/.config/<name>\n  ignore: echo <name> >> %s\n' "$IGNORE"
+  finding "$name"
+  n=$((n + 1))
+done < <(find "$HOME/.config" -mindepth 1 -maxdepth 1 | sort)
+[ $n -eq 0 ] && ok "every ~/.config entry is declared or ignored"
+
+# 3. Scripts: ~/bin is the repo's bin/, every script is runnable.
+section "Scripts"
+if [ "$(readlink -f "$HOME/bin")" != "$REPO/bin" ]; then
+  finding "~/bin is not a link to $REPO/bin" "dot apply"
+else
+  ok "~/bin -> $REPO/bin"
+fi
+for f in "$REPO"/bin/*; do
+  [ -f "$f" ] || continue
+  [ -x "$f" ] || finding "bin/$(basename "$f") is not executable" "chmod +x $f"
+  head -c2 "$f" | grep -q '^#!' || finding "bin/$(basename "$f") has no shebang" "add a #! line to $f"
+done
+
+# 4. Broken links, and links into ~/.asdf (deleting ~/.asdf would break them).
+section "Links"
+n=0
+while read -r l; do
+  [ -z "$l" ] && continue
+  finding "dangling: $l -> $(readlink "$l")" "rm $l, or redeclare it in mise.toml"; n=$((n + 1))
+done < <(find "$HOME" "$HOME/.config" -maxdepth 1 -xtype l 2>/dev/null)
+while read -r l; do
+  [ -z "$l" ] && continue
+  finding "points into ~/.asdf: $l -> $(readlink "$l")" "move the target out of ~/.asdf before deleting ~/.asdf"; n=$((n + 1))
+done < <(find "$HOME" "$HOME/.config" -maxdepth 1 -type l -lname "$HOME/.asdf/*" 2>/dev/null)
+[ $n -eq 0 ] && ok "no dangling links, nothing points into ~/.asdf"
+
+# 5. Machine AI configs that exist but aren't tracked.
+section "AI tool configs"
+n=0
+for f in "$HOME/.claude/settings.json" "$HOME/.claude/statusline-command.sh" \
+         "$HOME/.config/Cursor/User/settings.json" "$HOME/.config/Code/User/settings.json"; do
+  [ -e "$f" ] || continue
+  grep -qxF "$f" <<<"$declared" && continue
+  ignored "${f#"$HOME"/}" && continue
+  short="~/${f#"$HOME"/}"
+  finding "untracked: $short" "dot add --local --source <path> $short, or echo ${f#"$HOME"/} >> $IGNORE"
+  n=$((n + 1))
+done
+[ $n -eq 0 ] && ok "tracked AI configs all declared"
+
+# 6. Secrets in adopted files, and the commit hook.
+section "Secrets"
+if [ "$(git -C "$REPO" config --get core.hooksPath)" != githooks ]; then
+  finding "pre-commit hook not active" "git -C $REPO config core.hooksPath githooks"
+else
+  ok "pre-commit hook active (core.hooksPath=githooks)"
+fi
+dirs=()
+for d in claude config/gh config/opencode config/mise; do [ -e "$REPO/$d" ] && dirs+=("$REPO/$d"); done
+for d in "${dirs[@]}"; do
+  if ! "$MISE" -C "$REPO" x -- gitleaks dir "$d" --redact --no-banner --config "$REPO/.gitleaks.toml" >/dev/null 2>&1; then
+    finding "gitleaks flags ${d#"$REPO"/}" "mise -C $REPO x -- gitleaks dir $d --redact (look yourself; allowlist in .gitleaks.toml only if it's a false positive)"
+  fi
+done
+[ ${#dirs[@]} -gt 0 ] && ok "scanned: ${dirs[*]#"$REPO"/}"
+
+# 7. Shell regression check.
+section "dot:check"
+if out="$(bash "$REPO/mise-tasks/dot/check" 2>&1)"; then
+  ok "all checks passed"
+else
+  grep -E '^FAIL' <<<"$out" | while read -r line; do printf '  %s\n' "$line"; done
+  finding "dot:check failed" "dotrun dot:check"
+fi
+
+echo
+if [ "$findings" -gt 0 ]; then
+  echo "doctor: $findings finding(s)"
+  exit 1
+fi
+echo "doctor: clean"

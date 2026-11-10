@@ -20,27 +20,6 @@
             "command": "paplay /home/darren/Documents/media/work-finished.mp3"
           }
         ]
-      },
-      {
-        "_gstack_source": "gstack-timeline-stop",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/home/darren/.claude/skills/gstack/hosts/claude/hooks/timeline-stop-hook",
-            "timeout": 5
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "_gstack_source": "gstack-session-update",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/home/darren/.claude/skills/gstack/bin/gstack-session-update"
-          }
-        ]
       }
     ]
   },

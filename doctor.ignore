@@ -25,11 +25,13 @@ htop
 ibus
 Insync
 libreoffice
+microsoft-edge
 mimeapps.list
 neofetch
 ngrok
 obsidian
 opencode   # only plugin deps (package.json, bun.lock, node_modules), no config
+opera
 pulse
 qalculate
 Signal
@@ -40,6 +42,7 @@ spotify
 stripe
 user-dirs.locale
 user-dirs.dirs
+vivaldi
 vlc
 xdg-terminals.list
 yarn

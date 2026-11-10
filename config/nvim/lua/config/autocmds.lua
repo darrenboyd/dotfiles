@@ -7,11 +7,12 @@
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 
--- Never format markdown on save: it rewrites AI-generated files wholesale.
--- <leader>cf still formats on demand.
+-- Never format these on save; <leader>cf still formats on demand.
+-- markdown: markdownlint-cli2 --fix rewrites AI-generated files wholesale.
+-- sh (bash too): shfmt re-indents with tabs and rewrites backticks.
 vim.api.nvim_create_autocmd("FileType", {
-  group = vim.api.nvim_create_augroup("markdown_no_autoformat", { clear = true }),
-  pattern = { "markdown", "markdown.mdx" },
+  group = vim.api.nvim_create_augroup("no_autoformat", { clear = true }),
+  pattern = { "markdown", "markdown.mdx", "sh" },
   callback = function(ev)
     vim.b[ev.buf].autoformat = false
   end,

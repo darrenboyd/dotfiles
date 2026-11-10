@@ -26,6 +26,7 @@
 "~/.inputrc"           = { source = "home/inputrc" }
 "~/.irbrc"             = { source = "home/irbrc" }
 "~/.irbrc.d"           = { source = "home/irbrc.d" }
+"~/.markdownlint-cli2.yaml" = { source = "home/markdownlint-cli2.yaml" }
 # Env and PATH for every login shell, loaded by bash_profile before bashrc.
 "~/.profile.d"         = { source = "home/profile.d" }
 "~/.psqlrc"            = { source = "home/psqlrc" }

@@ -58,18 +58,14 @@ for f in "$REPO"/bin/*; do
   head -c2 "$f" | grep -q '^#!' || finding "bin/$(basename "$f") has no shebang" "add a #! line to $f"
 done
 
-# 4. Broken links, and links into ~/.asdf (deleting ~/.asdf would break them).
+# 4. Broken links.
 section "Links"
 n=0
 while read -r l; do
   [ -z "$l" ] && continue
   finding "dangling: $l -> $(readlink "$l")" "rm $l, or redeclare it in mise.toml"; n=$((n + 1))
 done < <(find "$HOME" "$HOME/.config" -maxdepth 1 -xtype l 2>/dev/null)
-while read -r l; do
-  [ -z "$l" ] && continue
-  finding "points into ~/.asdf: $l -> $(readlink "$l")" "move the target out of ~/.asdf before deleting ~/.asdf"; n=$((n + 1))
-done < <(find "$HOME" "$HOME/.config" -maxdepth 1 -type l -lname "$HOME/.asdf/*" 2>/dev/null)
-[ $n -eq 0 ] && ok "no dangling links, nothing points into ~/.asdf"
+[ $n -eq 0 ] && ok "no dangling links"
 
 # 5. Machine AI configs that exist but aren't tracked.
 section "AI tool configs"

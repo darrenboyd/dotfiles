@@ -2,11 +2,24 @@
   "hooks": {
     "Notification": [
       {
-        "matcher": "",
+        "matcher": "permission_prompt|idle_prompt|elicitation_dialog",
         "hooks": [
           {
             "type": "command",
-            "command": "paplay /home/darren/Documents/media/need-response.mp3"
+            "command": "paplay $HOME/code/claude-config/sounds/attention.wav",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "paplay $HOME/code/claude-config/sounds/attention.wav",
+            "async": true
           }
         ]
       }
@@ -17,7 +30,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "paplay /home/darren/Documents/media/work-finished.mp3"
+            "command": "paplay $HOME/code/claude-config/sounds/done.wav",
+            "async": true
           }
         ]
       }
@@ -51,30 +65,12 @@
   "tui": "fullscreen",
   "autoMode": {
     "environment": [
-      "### Org-wide",
-      "**Organization**: SignumU (GitHub org, from origin remote github.com:SignumU/collaboratory.git) — internal name \"Collaboratory\" per CLAUDE.md",
-      "**Cloud provider(s)**: AWS S3 (Active Storage file hosting in production, per CLAUDE.md)",
-      "**Repository visibility**: not queryable here via gh — assuming private per shipped default; treat github.com:SignumU/collaboratory.git accordingly",
-      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
-      "**Secrets management**: Rails encrypted credentials (config/master.key, config/credentials/{production,test,development}.key — all gitignored)",
-      "**Default / protected branches**: main (per CLAUDE.md branching convention) — protected-branch status not queryable here via gh",
-      "**CI/CD deploy targets**: Heroku (heroku remote → git.heroku.com/signum-collaboratory-demo.git)",
-      "**Network posture**: WebMock blocks external HTTP in tests; allow-list 127.0.0.1 only (per CLAUDE.md)",
-      "**Source control**: GitHub (github.com:SignumU/collaboratory.git) and Heroku (git.heroku.com/signum-collaboratory-demo.git) — this repo's remotes only",
-      "**Trusted internal domains**: None configured",
-      "**Trusted cloud buckets**: None configured",
-      "**Key internal services**: Stripe (payments/subscriptions, webhook at /ingress/stripe), Discord (channel/role sync), GoodJob (background jobs), Mailpit (dev mail)",
-      "**Internal package registry**: None configured",
-      "**Sensitive data locations & audiences**: config/master.key, config/credentials/production.key, config/credentials/test.key, config/credentials/development.key, .envrc, tmp/development_secret.txt, tmp/local_secret.txt — credentials/secrets, not for commit or sharing outside this checkout",
-      "**Data retention / declassification**: None configured",
-      "**Sensitive remote targets**: signum-collaboratory-demo (Heroku app, name does not contain 'prod' as a segment but is the only deploy target — treat as production-equivalent since it's the sole CI/CD deploy target); any namespace/host/container whose name carries prod or production as a whole word or segment",
-      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
-      "**Protected IaC scopes**: IAM, RBAC, networking, quota, and node-pool resources; anything whose name or tag carries prod or production as a whole word or name segment",
-      "### User-specific",
-      "**Primary use of Claude Code**: Ruby on Rails web application development (Signum Plaza / Collaboratory) — routine under this repo",
-      "**Trusted repo**: /home/darren/signum/cl (github.com:SignumU/collaboratory.git, and its Heroku deploy remote git.heroku.com/signum-collaboratory-demo.git) — visibility not confirmed via gh, assume private per shipped default",
-      "**Org-specific CLIs**: None configured",
-      "Routine under darren/ prefix: feature branches follow the pattern darren/feature-name, PRs merge to main (per CLAUDE.md)"
+      "$defaults",
+      "Primary use of Claude Code: Ruby on Rails web app development, across personal repos in ~/code and SignumU repos in ~/signum. Each project trusts its own working repo and remotes per the defaults; the entries below apply only when the working directory is /home/darren/signum/cl.",
+      "Organization (cl only): SignumU, GitHub org github.com/SignumU. /home/darren/signum/cl is Collaboratory (github.com:SignumU/collaboratory.git).",
+      "Key internal services (cl only): Stripe for payments and subscriptions (webhook at /ingress/stripe), Discord channel/role sync, GoodJob background jobs, Mailpit for dev mail, AWS S3 for Active Storage files in production.",
+      "Sensitive data locations (cl only): config/master.key, config/credentials/*.key, .envrc, tmp/development_secret.txt and tmp/local_secret.txt hold secrets (Rails encrypted credentials and env vars); never commit, print or send them anywhere.",
+      "Sensitive remote targets (cl only): the Heroku app signum-collaboratory-demo (git remote heroku, git.heroku.com/signum-collaboratory-demo.git) is the only deploy target; treat it as production even though its name doesn't contain 'prod'."
     ]
   }
 }

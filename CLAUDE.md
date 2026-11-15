@@ -23,6 +23,10 @@ mise -C ~/code/dotfiles x -- gitleaks dir <path> --redact   # secret scan a path
 Both tasks are read-only and exit 1 on any failure. Run `dotrun dot:check` after changing anything
 under `home/` (shell startup) and `dotrun doctor` after adding or moving a config.
 
+## Git
+
+- Commit and push straight to `main` (`git push origin HEAD:refs/heads/main`); no branches or PRs.
+
 ## How it fits together
 
 - **`mise.toml` is the single source of truth.** `[dotfiles]` maps each target in `~` to a source

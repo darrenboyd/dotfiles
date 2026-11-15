@@ -1,14 +1,70 @@
+Postgres (user-space, installed by mise)
 
-When installing postgres through asdf, add the following
-to the postgresql.conf file located in...
+mise installs the binaries (conda:postgresql, pinned in config/mise/config.toml).
+The data lives outside every tool's install tree, so `mise upgrade`, `mise prune`
+and `mise uninstall` can't touch it:
 
-.asdf/install/postgres/<version>/data/postgresql.conf
+  ~/.local/share/postgres/<major>     real data dir, one per major version
+  ~/.pgdata -> ~/.local/share/postgres/18   the one stable path everything uses
+
+PGDATA and PGHOST both point to ~/.pgdata. They're set in home/profile.d/32-postgres.sh
+(login shells) and config/environment.d/10-dotfiles.conf (apps started by systemd --user,
+e.g. the Claude desktop app). dot:check fails if the two disagree.
+
+Aliases (home/bashrc.d/53-pg.sh): pgstart, pgstop, pg_setup_user.
 
 
-listen_addresses = ''
-unix_socket_directories = '/home/darren/.pgdata'
+Access
+------
 
-Some documentation for upgrading majors:
+No TCP. postgresql.conf has:
 
+  listen_addresses = ''
+  unix_socket_directories = '/home/darren/.pgdata'
+
+The socket sits in a 0700 dir in ~, so only this OS user can reach it, and
+`local all all trust` in pg_hba.conf is effectively the same as `peer`. Rails
+apps connect through PGHOST; leave `host:` out of database.yml.
+
+
+New machine
+-----------
+
+  mise install                                   # from config/mise/config.toml
+  mkdir -p ~/.local/share/postgres
+  initdb -D ~/.local/share/postgres/18 -U postgres
+  ln -sfn ~/.local/share/postgres/18 ~/.pgdata
+  # add the two Access lines above to ~/.pgdata/postgresql.conf
+  pgstart
+  pg_setup_user                                  # darren superuser + darren database
+
+
+Major upgrade (e.g. 18 -> 19)
+-----------------------------
+
+Keep both majors installed until it's done.
+
+  mise install postgres@19
+  initdb -D ~/.local/share/postgres/19 -U postgres
+  # copy the two Access lines into the new postgresql.conf
+  pgstop
+  cd ~/.local/share/postgres
+  pg_upgrade -U postgres \
+    -b "$(mise where postgres@18)/bin" -B "$(mise where postgres@19)/bin" \
+    -d 18 -D 19
+  ln -sfn ~/.local/share/postgres/19 ~/.pgdata
+  mise use -g postgres@19.x                      # then: dot add --local --changed (copy-mode file)
+  pgstart
+
+Remove the 18 dir and `mise uninstall postgres@18` once 19 checks out.
+
+If pg_upgrade won't cooperate, dump and restore instead:
 https://www.postgresql.org/docs/current/upgrading.html#UPGRADING-VIA-PGDUMPALL
 
+
+History
+-------
+
+Until 2026-11, the data dir lived inside the asdf install
+(~/.asdf/installs/postgres/18.3/data), where uninstalling the version would
+have deleted it. It was copied to ~/.local/share/postgres/18 when moving to mise.

@@ -169,7 +169,7 @@ Bash, read-only, and it exits non-zero when anything is undecided. It reads the 
 1. Declared entries that aren't applied (`dot status --missing`, `bootstrap status --missing`).
 2. Entries in `~/.config` (131 today) that are neither declared nor listed in `~/code/dotfiles/doctor.ignore`. Most are app state (Slack, Steam, chromium), so the first run is long. Working through it *is* the cleanup pass.
 3. Files in `~/bin` that aren't the repo symlink, and repo `bin/` files missing the shebang or executable bit.
-4. Symlinks in `~` and `~/.config` that point into the repo at paths that no longer exist, plus any symlink into `~/.asdf` (`~/.pgdata` does today, see phase 5).
+4. Symlinks in `~` and `~/.config` that point into the repo at paths that no longer exist, plus any symlink into `~/.asdf` (`~/.pgdata` did until 2026-11-07, see phase 5).
 5. Machine AI configs present but undeclared: `~/.claude/settings.json`, `~/.claude/statusline-command.sh`, `~/.config/opencode`, `~/.config/Cursor/User/settings.json`, `~/.config/Code/User/settings.json`.
 6. gitleaks findings in adopted dirs (redacted), and `core.hooksPath` not set to `githooks`.
 7. `dot:check` failures.
@@ -231,7 +231,7 @@ Execution order: **0 → 1 → 2 → 4 → 3 → 5**. Doctor and adoption come b
    - `DOT_CHECK_PROFILE=container dotrun dot:check`.
 
    If `--from` rejects `file://`, the container test alone falls back to clone + `mise trust` + `mise bootstrap`.
-5. **Your cleanup pass.** Go through `archive/` and the doctor list file by file: keep, ignore, or delete. Done when doctor exits 0. **Do not delete `~/.asdf` until PGDATA is moved out**, because `~/.pgdata` points to `~/.asdf/installs/postgres/18.3/data/`. Moving it means reinstalling postgres under mise and migrating the data, or relocating the data dir.
+5. **Your cleanup pass.** Go through `archive/` and the doctor list file by file: keep, ignore, or delete. Done when doctor exits 0. ~~**Do not delete `~/.asdf` until PGDATA is moved out**~~ Done 2026-11-07: the data dir was copied to `~/.local/share/postgres/18`, `~/.pgdata` now points there, and `~/.asdf` has been deleted. The layout and upgrade steps are in `docs/POSTGRES`.
 
 ## Open Questions
 
@@ -792,7 +792,7 @@ Approval readiness: PASS — checked R1 (D3), R2 (carried D11, superseded by R8)
 - Windows and macOS targets: Linux-first (office-hours D4); claude-config stays the cross-platform layer.
 - Shell change (bash → fish): out of scope; numbered `bashrc.d` keeps it cheap later.
 - Templating/per-machine variants (chezmoi-style): unnecessary for one Linux target.
-- Moving Postgres data out of `~/.asdf`: flagged as a phase 5 guard (O11), not done here.
+- Moving Postgres data out of `~/.asdf`: flagged as a phase 5 guard (O11), not done here. (Done by hand 2026-11-07; see `docs/POSTGRES`.)
 - The cleanup pass itself (phase 5): yours, file by file.
 
 ### What already exists

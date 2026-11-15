@@ -13,6 +13,8 @@
 # Copy: Claude Code and gstack rewrite this file. Pull edits back with `dot add --local --changed`.
 "~/.claude/settings.json" = { source = "claude/settings.json", mode = "copy" }
 "~/.claude/statusline-command.sh" = { source = "claude/statusline-command.sh" }
+# Env for apps started by systemd --user (the Claude desktop app); mirrors profile.d.
+"~/.config/environment.d" = { source = "config/environment.d" }
 # Copy: `gh config set` rewrites it. hosts.yml (the token) is never tracked.
 "~/.config/gh/config.yml" = { source = "config/gh/config.yml", mode = "copy" }
 "~/.config/git/config" = { source = "config/git/config" }

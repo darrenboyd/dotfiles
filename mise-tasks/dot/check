@@ -140,7 +140,37 @@ else
   fi
 fi
 
-# 7. Startup time: median of 5 interactive login shells. Warns, never fails.
+# 7. environment.d mirrors profile.d: each KEY there must equal what a login
+# shell exports. Then warn (never fail) if systemd --user doesn't have it yet,
+# which is normal until the next log in.
+envd_files=("$REPO"/config/environment.d/*.conf)
+if [ ! -e "${envd_files[0]}" ]; then
+  skip "environment.d" "no config/environment.d/*.conf"
+else
+  envd_keys=()
+  declare -A envd_want=()
+  while IFS='=' read -r k v; do
+    v="${v//\$\{HOME\}/$HOME}"; v="${v//\$HOME/$HOME}"
+    envd_keys+=("$k"); envd_want[$k]="$v"
+  done < <(grep -hE '^[A-Za-z_][A-Za-z0-9_]*=' "${envd_files[@]}")
+  # shellcheck disable=SC2016
+  envd_login="$(cd "$HOME" && "${clean_env[@]}" bash -lc 'for k in "$@"; do printf "%s=%s\n" "$k" "${!k-<unset>}"; done' _ "${envd_keys[@]}" 2>/dev/null)"
+  envd_systemd="$(systemctl --user show-environment 2>/dev/null || true)"
+  for k in "${envd_keys[@]}"; do
+    if [ "$PROFILE" = container ] && [[ "$k" == PG* ]]; then skip "environment.d: $k" "container profile"; continue; fi
+    got="$(sed -n "s/^$k=//p" <<<"$envd_login")"
+    if [ "$got" = "${envd_want[$k]}" ]; then
+      pass "environment.d: $k matches login shell"
+    else
+      fail "environment.d: $k" "environment.d has '${envd_want[$k]}', bash -lc has '$got'"
+    fi
+    if [ "$PROFILE" != container ] && [ -n "$envd_systemd" ] && ! grep -qxF "$k=${envd_want[$k]}" <<<"$envd_systemd"; then
+      warn "environment.d: $k" "not in systemd --user yet (log out and back in)"
+    fi
+  done
+fi
+
+# 8. Startup time: median of 5 interactive login shells. Warns, never fails.
 times=()
 cd "$HOME" || exit 1
 TIMEFORMAT=%R

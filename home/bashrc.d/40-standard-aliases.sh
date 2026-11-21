@@ -30,8 +30,13 @@ export CLICOLOR=1
 export LSCOLORS=gxgxcxdxbxegedabagacad
 
 if [ -e /usr/bin/xdg-open ]; then
+  # setsid -f puts the opened app in its own session, detached from this
+  # terminal (stdin included), so it doesn't hold the shell open on exit.
   function o() {
-    xdg-open $* >& /dev/null
+    local arg
+    for arg in "${@:-.}"; do
+      setsid -f xdg-open "$arg" </dev/null >/dev/null 2>&1
+    done
   }
 else
   alias o='open'

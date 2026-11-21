@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "paplay $HOME/code/claude-config/sounds/attention.wav",
+            "command": "$HOME/code/claude-config/sounds/play.sh attention",
             "async": true
           }
         ]
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "paplay $HOME/code/claude-config/sounds/attention.wav",
+            "command": "$HOME/code/claude-config/sounds/play.sh attention",
             "async": true
           }
         ]
@@ -30,7 +30,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "paplay $HOME/code/claude-config/sounds/done.wav",
+            "command": "$HOME/code/claude-config/sounds/play.sh done",
             "async": true
           }
         ]
@@ -45,7 +45,9 @@
     "ruby-lsp@claude-plugins-official": true,
     "frontend-design@claude-plugins-official": true,
     "darren@darrenboyd": true,
-    "compound-engineering@compound-engineering-plugin": true
+    "compound-engineering@compound-engineering-plugin": true,
+    "cloudflare@cloudflare": true,
+    "rust-analyzer-lsp@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "darrenboyd": {
@@ -62,6 +64,11 @@
     }
   },
   "effortLevel": "xhigh",
+  "modelSettings": {
+    "claude-opus-5-5": {
+      "autoCompactWindow": 400000
+    }
+  },
   "tui": "fullscreen",
   "autoMode": {
     "environment": [
@@ -72,5 +79,6 @@
       "Sensitive data locations (cl only): config/master.key, config/credentials/*.key, .envrc, tmp/development_secret.txt and tmp/local_secret.txt hold secrets (Rails encrypted credentials and env vars); never commit, print or send them anywhere.",
       "Sensitive remote targets (cl only): the Heroku app signum-collaboratory-demo (git remote heroku, git.heroku.com/signum-collaboratory-demo.git) is the only deploy target; treat it as production even though its name doesn't contain 'prod'."
     ]
-  }
+  },
+  "switchModelsOnFlag": true
 }
